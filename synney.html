@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Synney</title>
+  <style>
+		:root {
+			--bg-1: #0f1014;
+			--bg-2: #1a1c23;
+			--bg-3: #2d2f39;
+			--ant-1: #ff697d;
+			--ant-glw: #ff143b;
+			--ant-2: #8a3a47;
+			--ant-3: #9F1C3D;
+			--txt-1: #f1f1f1;
+			--txt-2: #a0a0a0;
+			--glw: rgba(200, 200, 255, 0.1);
+		}
+		html{
+			color-scheme:dark;
+		}
+		body{
+			font-family: system-ui, sans-serif;
+			padding:0;
+			margin:0;
+			background-color:var(--bg-1);
+			color: var(--txt-1);
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			flex-direction:column;
+			width:100vw;
+			height:100vh;
+		}
+		header{
+			position:relative;
+			font-size:30px;
+			margin: 0 0 30px 0;
+			font-weight:100;
+			text-shadow: 0 0 20px;
+		}
+		header span {
+			position:absolute;
+			right:0;
+			bottom:0;
+			font-size:15px;
+		}
+		main{
+			width:100vmin;
+			padding:50px 80px;
+			border-radius:50px;
+			border:1px solid var(--glw);
+			background:linear-gradient(rgba(150,150,255,0.1),rgba(100,100,255,0.05));
+			box-shadow:0 30px 50px rgba(100,100,255,0.1);
+			box-sizing:border-box;
+		}
+		#syn-keys {
+			display:flex; user-select:none; width:100%; height:15vh;margin-bottom:30px;
+		}
+		.syn-key {
+			width:100%;
+			height:100%;
+			border:1px solid var(--ant-2);
+			margin:1px;
+			display:flex;
+			align-items:flex-end;
+			justify-content:center;
+			cursor:pointer;
+			border-radius: 0 0 10px 10px;
+			padding-bottom:10px;
+			box-sizing:border-box;
+			transition:background .1s linear;
+		}
+		.syn-key.syn-active {
+			background:var(--ant-2);
+		}
+		.syn-key.syn-key-black {
+			background:var(--ant-1);
+			height:60%;
+			width:80%;
+			box-shadow: 0 0 80px var(--ant-glw), 0 5px 25px rgba(255,100,100,0.4),inset -15px -10px 30px rgba(100,0,0,0.4);
+			margin-left:-1vmin;
+			margin-right:-1vmin;
+			z-index:2;
+			position:relative;
+			transition:background .1s linear, box-shadow .1s linear;
+		}
+		.syn-key.syn-key-black.syn-active {
+			box-shadow: 0 0 80px var(--ant-glw), 0 5px 25px rgba(255,100,100,0.4),inset -15px -10px 30px rgba(100,0,0,0),inset 15px 10px 30px rgba(100,0,0,0.4);
+			background:var(--ant-2);
+		}
+		.syn-ctrl {
+			margin-top:12px;
+			display:flex;
+			gap:12px;
+			align-items:center;
+			justify-content:center;
+		}
+		.syn-inp {
+			background:var(--ant-2);
+			border-radius:20px;
+			padding:10px;
+			font-size:15px;
+			border-color:var(--ant-1);
+			border-style:solid;
+			box-shadow: 0 5px 40px var(--ant-glw),inset -10px -10px 15px rgba(100,0,0,0.2);
+			accent-color:var(--ant-1);
+			transition:background .1s linear, transform .1s ease;
+      border-width:1px;
+		}
+		.syn-inp[type="range"] {
+			padding:0;
+			background:linear-gradient(var(--ant-2) 30%,var(--ant-1) 35%, var(--ant-1) 65%,var(--ant-2) 70%);
+			border:1px solid var(--ant-1);
+			box-sizing:content-box;
+			position:relative;
+			appearance: none;
+		}
+		.syn-inp:focus {outline:none;}
+		.syn-inp:hover {background: var(--ant-1)}
+		.syn-inp:active {background: var(--ant-3);transform:scale(0.9)}
+		.syn-inp[type="range"]:hover {background:linear-gradient(var(--ant-2) 30%,var(--ant-1) 35%, var(--ant-1) 65%,var(--ant-2) 70%);}
+		.syn-inp[type="range"]:active {background:linear-gradient(var(--ant-2) 30%,var(--ant-3) 35%, var(--ant-3) 65%,var(--ant-2) 70%);}
+		label {display:flex;flex-direction:column;font-size:12px;}
+		label input, label select {margin-top:3px;}
+		footer {
+			text-shadow: 0 0 20px;
+			display:flex;
+			text-align:right;
+			width:100%;
+			justify-content:flex-end;
+			margin-top:20px;
+			font-size:12px;
+			line-height:12px;
+		}
+		#syn-viz {
+			display:block;
+      margin-bottom:-1px;
+		}
+  </style>
+</head>
+<body>
+	<main>
+		<header>♡ synney<span>a tuff synth</span></header>
+		<canvas id='syn-viz' height='200'></canvas>
+  	<div id='syn-keys'></div>
+		<form class='syn-ctrl'>
+			<label>Instrument <select id='syn-ins' class='syn-inp'><option value='5'>Bell</option><option value='4'>Organ</option><option value='6'>Electric Piano</option><option value='0'>Sine</option><option value='1'>Square</option><option value='2'>Sawtooth</option><option value='3'>Triangle</option><option value='7'>Reese</option></select></label>
+			<label>Keymap <select id='syn-map' class='syn-inp'><option value='1'>Fl Studio</option><option value='2'>Missed Calls</option><option value='0'>Qwerty</option><option value='3'>Asdf</option></select></label>
+			<label>Transposition <input id='syn-trs' class='syn-inp' type='number' step='1' value='0'></label>
+			<label>Tuning <input id='syn-tune' class='syn-inp' type='number' min='1' value='440'></label>
+		</form>
+		<form class='syn-ctrl'>
+			<label>Attack <input id='syn-atk' class='syn-inp' type='number' min='0' step='0.001' value='0.01'></label>
+			<label>Decay <input id='syn-dec' class='syn-inp' type='number' min='0' step='0.01' value='0.2'></label>
+			<label>Release <input id='syn-rel' class='syn-inp' type='number' min='0' step='0.01' value='2'></label>
+			<label>Sustain <input id='syn-sus' class='syn-inp' type='range' min='0.01' max='1' step='0.01' value='0.7'></label>
+			<input type='reset' class='syn-inp'>
+		</form>
+		<form class='syn-ctrl'>
+			<label>Pluck <input id='syn-plk' class='syn-inp' type='checkbox'></label>
+			<label>Decay <input id='syn-plk-dec' class='syn-inp' type='number' min='0' step='0.01' value='1'></label>
+			<input type='reset' class='syn-inp'>
+		</form>
+		<form class='syn-ctrl'>
+			<label>Gain <input id='syn-gain' class='syn-inp' type='range' min='0' max='1' step='0.01' value='0.5'></label>
+			<label>Pan <input id='syn-pan' class='syn-inp' type='range' min='-1' max='1' step='0.01' value='0'></label>
+		</form>
+		<footer>Synney v1.1<br>© Frostbyte 2025. aGPLv3.0</footer>
+	</main>
+<script>
+/*
+Todo:
+Add log and normal scale selector for viz
+Add different viz modes (freq,time), style (line,bars,...), shape (circle,line,square)
+Add viz adjustment
+Add unison
+Add echo plugin
+Add compressor plugin
+Add filter plugin
+Add OTT-like plugin
+Add widener plugin
+Add super panning plugin
+Add wave shaping plugin
+Add noise
+Add audio input
+Add convolver plugin
+Add sampler
+Add reverse polarity
+Add filtered noise Instrument
+Add clipper
+Add stereo shaper thingy
+
+Add midi support
+
+Add phaser
+Add flanger
+Add chorus
+*/
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const keyMaps = [
+	{'z':-21,'s':-20,'x':-19,'d':-18,'c':-17,'v':-16,'g':-15,'b':-14,'h':-13,'n':-12,'j':-11,'m':-10,',':-9,'l':-8,'.':-7,';':-6,'/':-5,'q':-4,'2':-3,'w':-2,'3':-1,'e':0,'4':1,'r':2,'t':3,'6':4,'y':5,'7':6,'u':7,'i':8,'9':9,'o':10,'0':11,'p':12,'-':13,'[':14,']':15},
+	{'z':-21,'s':-20,'x':-19,'d':-18,'c':-17,'v':-16,'g':-15,'b':-14,'h':-13,'n':-12,'j':-11,'m':-10,',':-9,'l':-8,'.':-7,';':-6,'/':-5,'q':-9,'2':-8,'w':-7,'3':-6,'e':-5,'r':-4,'5':-3,'t':-2,'6':-1,'y':0,'7':1,'u':2,'i':3,'9':4,'o':5,'0':6,'p':7,'[':8,'=':9,']':10},
+	{'1':-33,'!':-32,'2':-31,'@':-30,'3':-29,'4':-28,'$':-27,'5':-26,'%':-25,'6':-24,'^':-23,'7':-22,'8':-21,'*':-20,'9':-19,'(':-18,'0':-17,'q':-16,'Q':-15,'w':-14,'W':-13,'e':-12,'E':-11,'r':-10,'t':-9,'T':-8,'y':-7,'Y':-6,'u':-5,'i':-4,'I':-3,'o':-2,'O':-1,'p':0,'P':1,'a':2,'s':3,'S':4,'d':5,'D':6,'f':7,'g':8,'G':9,'h':10,'H':11,'j':12,'J':13,'k':14,'l':15,'L':16,'z':17,'Z':18,'x':19,'c':20,'C':21,'v':22,'V':23,'b':24,'B':25,'n':26,'m':27},
+	{'a':-9,'w':-8,'s':-7,'e':-6,'d':-5,'f':-4,'t':-3,'g':-2,'y':-1,'h':0,'u':1,'j':2,'k':3,'o':4,'l':5,'p':6,';':7,'\'':8,']':9}
+];
+const blackSet = new Set([1,3,6,8,10]);
+
+const masterAnal = ctx.createAnalyser();
+masterAnal.fftSize = 1024;
+masterAnal.smoothingTimeConstant = 0.85;
+const masterGain = ctx.createGain();
+masterGain.connect(ctx.destination);
+masterGain.connect(masterAnal);
+const masterPan = ctx.createStereoPanner();
+masterPan.connect(masterGain);
+const master = ctx.createGain();
+/*
+const masterecho = ctx.createDelay(1);
+masterecho.delayTime.value = 0.25
+const masterechogain = ctx.createGain();
+masterechogain.gain.value = 0.5;
+masterecho.connect(masterechogain);
+masterechogain.connect(master);
+master.connect(masterecho);
+*/
+master.connect(masterPan);
+
+const insSel = document.getElementById('syn-ins');
+const mgainInp = document.getElementById('syn-gain');
+const mpanInp = document.getElementById('syn-pan');
+const mapSel = document.getElementById('syn-map');
+const tuneInp = document.getElementById('syn-tune');
+const susInp = document.getElementById('syn-sus');
+const atkInp = document.getElementById('syn-atk');
+const relInp = document.getElementById('syn-rel');
+const trsInp = document.getElementById('syn-trs');
+const decInp = document.getElementById('syn-dec');
+const headerCont = document.getElementsByTagName('header')[0];
+const vizCanv = document.getElementById('syn-viz');
+const vctx = vizCanv.getContext('2d');
+const pianoWave = ctx.createPeriodicWave(new Float32Array([0,0,0,0,0,0,0]),new Float32Array([0,1,1,1,1,1,1]));
+const organWave = ctx.createPeriodicWave(new Float32Array([0,0,0,0,0,0,0]),new Float32Array([0,1,1,0,1,0,1]));
+const bellWave = ctx.createPeriodicWave(new Float32Array([0,0,0,0,0,0,0,0]),new Float32Array([0,1,0,1,0,1,0,1]));
+masterGain.gain.value = mgainInp.value;
+mgainInp.addEventListener('input', ()=>masterGain.gain.value=mgainInp.value);
+mpanInp.addEventListener('input', ()=>masterPan.pan.value=mpanInp.value);
+vizCanv.width = headerCont.getBoundingClientRect().width;
+
+const plkChk = document.getElementById('syn-plk');
+const plkDec = document.getElementById('syn-plk-dec');
+
+const keyCont = document.getElementById('syn-keys');
+const count = 61;
+const activeNotes = new Map();
+const keyElms = new Map();
+
+const vizFreqCount = masterAnal.frequencyBinCount;
+const vizFreqArray = new Uint8Array(vizFreqCount);
+const coolGrad = vctx.createLinearGradient(0,0,0,vizCanv.height);
+coolGrad.addColorStop(0, '#FEBEC7');
+coolGrad.addColorStop(1, '#ff697d');
+let vizLogDiv = vizCanv.width/6;
+let vizRegDiv = vizCanv.width/vizFreqCount;
+vctx.shadowBlur = 40;
+vctx.shadowColor = '#ff143baa';
+vctx.fillStyle = coolGrad;
+function renderViz(){
+	vctx.clearRect(0,0,vizCanv.width,vizCanv.height);
+	masterAnal.getByteFrequencyData(vizFreqArray);
+	vctx.beginPath();
+	vctx.moveTo(0,vizCanv.height);
+	let p = 0;
+	vctx.lineTo(0,vizCanv.height-vizFreqArray[0]);
+	for(let i=1;i<vizFreqCount;i++){
+		vctx.lineTo(p+=vizLogDiv/i,vizCanv.height-((vizFreqArray[i]*vizCanv.height*0.8)/255));
+		if(p>vizCanv.width) break;
+	}
+	vctx.lineTo(vizCanv.width,vizCanv.height);
+	vctx.closePath();
+	vctx.fill();
+	requestAnimationFrame(renderViz);
+}
+renderViz();
+function noteOn(midi){
+	midi+=parseInt(trsInp.value);
+  if(activeNotes.has(midi))return;
+  const oscArr = [];
+	//Make an oscillator list
+  const gain = ctx.createGain();
+	const oscOut = ctx.createGain();
+	const noteFreq = parseInt(tuneInp.value)*Math.pow(2,midi/12);
+	switch(parseInt(insSel.value)){
+		case 0:{
+			const osc = ctx.createOscillator();
+			osc.type = 'sine';
+			osc.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscArr.push(osc);
+			osc.start();
+			break;
+		}
+		case 1:{
+			const osc = ctx.createOscillator();
+			osc.type = 'square';
+			osc.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscArr.push(osc);
+			osc.start();
+			break;
+		}
+		case 2:{
+			const osc = ctx.createOscillator();
+			osc.type = 'sawtooth';
+			osc.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscArr.push(osc);
+			osc.start();
+			break;
+		}
+		case 3:{
+			const osc = ctx.createOscillator();
+			osc.type = 'triangle';
+			osc.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscArr.push(osc);
+			osc.start();
+			break;
+		}
+		case 4:{
+			const osc = ctx.createOscillator();
+			osc.setPeriodicWave(organWave);
+			osc.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscArr.push(osc);
+			osc.start();
+			break;
+		}
+		case 5:{
+			const osc = ctx.createOscillator();
+			osc.setPeriodicWave(bellWave);
+			osc.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscArr.push(osc);
+			osc.start();
+			break;
+		}
+		case 6:{
+			const osc = ctx.createOscillator();
+			osc.setPeriodicWave(pianoWave);
+			osc.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscArr.push(osc);
+			osc.start();
+			break;
+		}
+		case 7:{
+			const osc = ctx.createOscillator();
+			osc.type = 'sawtooth';
+			const oscl = ctx.createOscillator();
+			osc.type = 'sawtooth';
+			const oscr = ctx.createOscillator();
+			osc.type = 'sawtooth';
+			const reeseFilter = ctx.createBiquadFilter();
+			reeseFilter.type = 'lowpass';
+			reeseFilter.frequency.value = 150;
+			reeseFilter.connect(gain);
+			osc.connect(reeseFilter);
+			reeseFilter.connect(oscOut);
+			osc.frequency.value = noteFreq;
+			oscl.frequency.value = noteFreq-0.5;
+			oscr.frequency.value = noteFreq+0.5;
+			const panLeft = ctx.createStereoPanner();
+			panLeft.pan.value = -1;
+			const panRight = ctx.createStereoPanner();
+			panRight.pan.value = 1;
+			oscl.connect(panLeft)
+			oscr.connect(panRight);
+			panLeft.connect(reeseFilter);
+			panRight.connect(reeseFilter);
+			oscArr.push(osc);
+			oscArr.push(oscl);
+			oscArr.push(oscr);
+			osc.start();
+			oscl.start();
+			oscr.start();
+			break;
+		}
+	}
+	if(plkChk.checked){
+		const pluckFilter = ctx.createBiquadFilter();
+		pluckFilter.type = 'lowpass';
+		pluckFilter.frequency.setValueAtTime(10000,ctx.currentTime);
+		pluckFilter.frequency.exponentialRampToValueAtTime(0.0001,ctx.currentTime+parseInt(plkDec.value));
+		pluckFilter.connect(gain);
+		oscOut.connect(pluckFilter);
+	}else{
+		oscOut.connect(gain);
+	}
+  const attack = parseFloat(atkInp.value);
+  gain.gain.cancelScheduledValues(ctx.currentTime);
+  gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(1.0,ctx.currentTime+attack);
+  gain.gain.exponentialRampToValueAtTime(parseFloat(susInp.value),ctx.currentTime+attack+parseFloat(decInp.value));
+  gain.connect(master);
+	keyElms.get(midi)?.classList.add('syn-active');
+  activeNotes.set(midi,{oscArr, gain});
+}
+function noteOff(midi){
+	midi+=parseInt(trsInp.value);
+  const node = activeNotes.get(midi);
+  if(!node)return;
+  const now = ctx.currentTime;
+  const release = parseFloat(relInp.value);
+  node.gain.gain.cancelScheduledValues(now);
+  node.gain.gain.setValueAtTime(node.gain.gain.value, now);
+  node.gain.gain.exponentialRampToValueAtTime(0.0001, now + release);
+	for(let i=0;i<node.oscArr.length;i++){
+		node.oscArr[i].stop(now + release + 0.05);
+	}
+  setTimeout(()=> node.osc.disconnect(), (release+0.1)*1000);
+	keyElms.get(midi)?.classList.remove('syn-active');
+  activeNotes.delete(midi);
+}
+
+for (let i=0;i<count;i++){
+  const midi = i-33;
+  const key = document.createElement('div');
+  if(blackSet.has(i%12)){
+   key.className = 'syn-key-black syn-key';
+  }else{
+   key.className = 'syn-key';
+  }
+  for(id of Object.keys(keyMaps[mapSel.value])){
+    if(keyMaps[mapSel.value][id] === midi){key.textContent += id;}
+  }
+  key.addEventListener('mousedown', ()=>noteOn(midi));
+  key.addEventListener('mouseup', ()=>noteOff(midi));
+  key.addEventListener('mouseleave', ()=>noteOff(midi));
+  keyCont.appendChild(key);
+	keyElms.set(midi,key);
+}
+function updateKeyText(){
+	for(i of keyElms){
+		i[1].textContent = '';
+	}
+	for(k in keyMaps[mapSel.value]){
+		const elm = keyElms.get(keyMaps[mapSel.value][k]+parseInt(trsInp.value));
+		if(elm) elm.textContent += k;
+	}
+}
+trsInp.addEventListener('change',updateKeyText)
+mapSel.addEventListener('change',updateKeyText);
+window.addEventListener('keydown',e=>{
+  if(e.repeat)return;
+  const midi = keyMaps[mapSel.value][e.key];
+  if(midi != undefined)noteOn(midi);
+});
+window.addEventListener('keyup',e=>{
+  const midi = keyMaps[mapSel.value][e.key];
+  if(midi != undefined)noteOff(midi);
+});
+window.addEventListener('resize',()=>{
+	vizCanv.width=headerCont.getBoundingClientRect().width;
+	vctx.shadowBlur = 40;
+	vctx.shadowColor = '#ff143baa';
+	vctx.fillStyle = '#ff697d';
+	vizLogDiv = vizCanv.width/6;
+});
+</script>
+</body>
+</html>
