@@ -4,145 +4,304 @@
   <meta charset='utf-8' />
   <title>Synney</title>
   <style>
-		:root {
-			--bg-1: #0f1014;
-			--bg-2: #1a1c23;
-			--bg-3: #2d2f39;
-			--ant-1: #ff697d;
-			--ant-glw: #ff143b;
-			--ant-2: #8a3a47;
-			--ant-3: #9F1C3D;
-			--txt-1: #f1f1f1;
-			--txt-2: #a0a0a0;
-			--glw: rgba(200, 200, 255, 0.1);
-		}
-		html{
-			color-scheme:dark;
-		}
-		body{
-			font-family: system-ui, sans-serif;
-			padding:0;
-			margin:0;
-			background-color:var(--bg-1);
-			color: var(--txt-1);
-			display:flex;
-			align-items:center;
-			justify-content:center;
-			flex-direction:column;
-			width:100vw;
-			height:100vh;
-		}
-		header{
-			position:relative;
-			font-size:30px;
-			margin: 0 0 30px 0;
-			font-weight:100;
-			text-shadow: 0 0 20px;
-		}
-		header span {
-			position:absolute;
-			right:0;
-			bottom:0;
-			font-size:15px;
-		}
-		main{
-			width:100vmin;
-			padding:50px 80px;
-			border-radius:50px;
-			border:1px solid var(--glw);
-			background:linear-gradient(rgba(150,150,255,0.1),rgba(100,100,255,0.05));
-			box-shadow:0 30px 50px rgba(100,100,255,0.1);
-			box-sizing:border-box;
-		}
-		#syn-keys {
-			display:flex; user-select:none; width:100%; height:15vh;margin-bottom:30px;
-		}
-		.syn-key {
-			width:100%;
-			height:100%;
-			border:1px solid var(--ant-2);
-			margin:1px;
-			display:flex;
-			align-items:flex-end;
-			justify-content:center;
-			cursor:pointer;
-			border-radius: 0 0 10px 10px;
-			padding-bottom:10px;
-			box-sizing:border-box;
-			transition:background .1s linear;
-		}
-		.syn-key.syn-active {
-			background:var(--ant-2);
-		}
-		.syn-key.syn-key-black {
-			background:var(--ant-1);
-			height:60%;
-			width:80%;
-			box-shadow: 0 0 80px var(--ant-glw), 0 5px 25px rgba(255,100,100,0.4),inset -15px -10px 30px rgba(100,0,0,0.4);
-			margin-left:-1vmin;
-			margin-right:-1vmin;
-			z-index:2;
-			position:relative;
-			transition:background .1s linear, box-shadow .1s linear;
-		}
-		.syn-key.syn-key-black.syn-active {
-			box-shadow: 0 0 80px var(--ant-glw), 0 5px 25px rgba(255,100,100,0.4),inset -15px -10px 30px rgba(100,0,0,0),inset 15px 10px 30px rgba(100,0,0,0.4);
-			background:var(--ant-2);
-		}
-		.syn-ctrl {
-			margin-top:12px;
-			display:flex;
-			gap:12px;
-			align-items:center;
-			justify-content:center;
-		}
-		.syn-inp {
-			background:var(--ant-2);
-			border-radius:20px;
-			padding:10px;
-			font-size:15px;
-			border-color:var(--ant-1);
-			border-style:solid;
-			box-shadow: 0 5px 40px var(--ant-glw),inset -10px -10px 15px rgba(100,0,0,0.2);
-			accent-color:var(--ant-1);
-			transition:background .1s linear, transform .1s ease;
-      border-width:1px;
-		}
-		.syn-inp[type="range"] {
-			padding:0;
-			background:linear-gradient(var(--ant-2) 30%,var(--ant-1) 35%, var(--ant-1) 65%,var(--ant-2) 70%);
-			border:1px solid var(--ant-1);
-			box-sizing:content-box;
-			position:relative;
-			appearance: none;
-		}
-		.syn-inp:focus {outline:none;}
-		.syn-inp:hover {background: var(--ant-1)}
-		.syn-inp:active {background: var(--ant-3);transform:scale(0.9)}
-		.syn-inp[type="range"]:hover {background:linear-gradient(var(--ant-2) 30%,var(--ant-1) 35%, var(--ant-1) 65%,var(--ant-2) 70%);}
-		.syn-inp[type="range"]:active {background:linear-gradient(var(--ant-2) 30%,var(--ant-3) 35%, var(--ant-3) 65%,var(--ant-2) 70%);}
-		label {display:flex;flex-direction:column;font-size:12px;}
-		label input, label select {margin-top:3px;}
-		footer {
-			text-shadow: 0 0 20px;
-			display:flex;
-			text-align:right;
-			width:100%;
-			justify-content:flex-end;
-			margin-top:20px;
-			font-size:12px;
-			line-height:12px;
-		}
-		#syn-viz {
-			display:block;
-      margin-bottom:-1px;
-		}
+:root {
+	--bg-1: #0f1014;
+	--bg-2: #111523;
+	--bg-3: #2d3247;
+	--bg-4: #49506f;
+	--ant-1: #ff697d;
+	--ant-glw: #ff143b;
+	--ant-2: #8a3a47;
+	--ant-3: #9F1C3D;
+	--txt-1: #f1f1f1;
+	--txt-2: #a0a0a0;
+	--glw: rgba(200, 200, 255, 0.1);
+}
+html{
+	color-scheme:dark;
+}
+body{
+	font-family: system-ui, sans-serif;
+	padding:0;
+	margin:0;
+	background-color:var(--bg-1);
+	color: var(--txt-1);
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-direction:column;
+	width:100vw;
+	height:100vh;
+}
+header{
+	position:relative;
+	font-size:30px;
+	/* margin: 0 0 30px 0; */
+	font-weight:100;
+	text-shadow: 0 0 20px;
+}
+header span {
+	position:absolute;
+	right:0;
+	bottom:0;
+	font-size:15px;
+}
+main{
+    width: 100vmin;
+    padding: 40px 70px;
+    border-radius: 50px;
+    border: 1px solid var(--glw);
+    background: linear-gradient(rgba(150, 150, 255, 0.1), rgba(100, 100, 255, 0.05));
+    box-shadow: 0 30px 50px rgba(100, 100, 255, 0.1);
+    box-sizing: border-box;
+    position: relative;
+}
+#syn-keys {
+	display:flex;
+	user-select:none;
+	width:100%;
+	height: 12vh;
+	margin-bottom:20px;
+}
+.syn-key {
+	width:100%;
+	height:100%;
+	border:1px solid var(--ant-2);
+	margin:1px;
+	display:flex;
+	align-items:flex-end;
+	justify-content:center;
+	cursor:pointer;
+	border-radius: 0 0 10px 10px;
+	padding-bottom:10px;
+	box-sizing:border-box;
+	transition:background .1s linear;
+}
+.syn-key.syn-active {
+	background:var(--ant-2);
+}
+.syn-key.syn-key-black {
+	background:var(--ant-1);
+	height:60%;
+	width:80%;
+	box-shadow: 0 0 80px var(--ant-glw), 0 5px 25px rgba(255,100,100,0.4),inset -15px -10px 30px rgba(100,0,0,0.4);
+	margin-left:-1vmin;
+	margin-right:-1vmin;
+	z-index:2;
+	position:relative;
+	transition:background .1s linear, box-shadow .1s linear;
+}
+.syn-key.syn-key-black.syn-active {
+	box-shadow: 0 0 80px var(--ant-glw), 0 5px 25px rgba(255,100,100,0.4),inset -15px -10px 30px rgba(100,0,0,0),inset 15px 10px 30px rgba(100,0,0,0.4);
+	background:var(--ant-2);
+}
+.syn-ctrl {
+	margin-top:8px;
+	display:flex;
+	gap:12px;
+	align-items:center;
+	justify-content:center;
+}
+.syn-inp {
+	background:var(--ant-2);
+	border-radius:20px;
+	padding:10px;
+	font-size:15px;
+	border-color:var(--ant-1);
+	border-style:solid;
+	box-shadow: 0 5px 40px var(--ant-glw),inset -10px -10px 15px rgba(100,0,0,0.2);
+	accent-color:var(--ant-1);
+	transition:background .1s linear, transform .1s ease;
+border-width:1px;
+}
+.syn-inp[type="range"] {
+    padding: 0;
+    background: linear-gradient(var(--ant-2) 40%, var(--ant-1) 45%, var(--ant-1) 55%, var(--ant-2) 60%) !important;
+    border: 1px solid var(--ant-1);
+    box-sizing: content-box;
+    position: relative;
+    appearance: none;
+}
+.syn-inp:focus {outline:none;}
+.syn-inp:hover {background: var(--ant-1)}
+.syn-inp:active {background: var(--ant-3);transform:scale(0.9)}
+.syn-inp[type="range"]:active {
+    background: linear-gradient(var(--ant-2) 40%, var(--ant-3) 45%, var(--ant-3) 55%, var(--ant-2) 60%) !important;
+}
+label {
+	display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    justify-content: space-between;
+}
+label input, label select {margin-top:3px;}
+footer {
+	text-shadow: 0 0 20px;
+	display:flex;
+	text-align:right;
+	width:100%;
+	justify-content:flex-end;
+	margin-top: 10px;
+    font-size: 8px;
+    line-height: 10px;
+}
+#syn-viz {
+	display:block;
+margin-bottom:-1px;
+}
+#syn-plugins {
+	height: 25vh;
+	background: var(--bg-2);
+	border-radius: 20px;
+	margin-top: 10px;
+	border: var(--bg-4) solid 1px;
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#syn-plugin-add {
+    padding: 0;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    display: flex;
+}
+.syn-menu {
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: -10px;
+    background: var(--ant-3);
+    border-radius: 10px;
+    border: solid 1px var(--ant-1);
+    box-shadow: 0 5px 40px var(--ant-glw), inset -12px -11px 30px rgba(100, 0, 0, 0.5);
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(0, -100%) scale(1);
+    transition: opacity .2s ease-out, transform .2s ease-out;
+}
+.syn-menu.syn-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(0, -80%) scale(0.8, 0.9);
+    box-shadow: 0 0 0 var(--ant-glw), inset -12px -11px 30px rgba(100, 0, 0, 0.5);
+}
+.syn-menu-item {
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    transition: .1s linear box-shadow;
+    border-top: var(--ant-1) solid 1px;
+    box-shadow: inset 0 0 8px var(--ant-1);
+    cursor: pointer;
+    user-select: none;
+}
+.syn-menu-item:hover {
+    box-shadow: inset 0 0 50px var(--ant-1);
+}
+.syn-menu.syn-hidden .syn-menu-item {
+    box-shadow: inset 0 0 0 var(--ant-1);
+}
+#syn-add-menu:before {
+    content: 'Effects';
+    padding: 5px;
+}
+.syn-add {
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 10px;
+    flex-direction: column;
+    position: absolute;
+}
+.syn-effect {
+    padding: 5px 10px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--bg-4);
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+.syn-effect summary {
+    list-style-type: '+ ';
+    padding-right: 30px;
+    position: relative;
+}
+.syn-effect summary:focus {outline:none}
+.syn-effect[open] summary {
+    list-style-type: '- ';
+    border-bottom: 1px solid var(--bg-4);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.syn-close {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    cursor: pointer;
+}
+.syn-close:hover {
+    font-weight: bold;
+}
+.syn-toggle {
+    border-radius: 50px;
+    width: fit-content;
+    aspect-ratio: 2;
+    padding: 3px 5px;
+    position: relative;
+    height: 20px;
+    box-sizing: content-box;
+    display: flex;
+    justify-content: center;
+}
+.syn-toggle input {
+    background: var(--ant-1);
+    appearance: none;
+    height: 100%;
+    width: fit-content;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    transition: transform .1s ease;
+    margin: 0;
+}
+.syn-toggle input:checked {
+    transform: translate(100%, 0);
+}
+.syn-effect .syn-ctrl {
+    align-items: stretch;
+    justify-content: space-evenly;
+    margin: 0 10px;
+    margin-bottom: 10px;
+}
+.syn-effect .syn-ctrl label {
+    width: 100%;
+}
+.syn-toggle:hover {
+    background: var(--bg-3);
+}
+.syn-effect summary .syn-toggle {
+    float: right;
+}
+.syn-shape-canvas {
+	border-radius: 10px;
+    background: var(--bg-4);
+    border: 1px solid var(--glw);
+    box-shadow: 0 10px 40px var(--bg-4);
+}
   </style>
 </head>
 <body>
 	<main>
-		<header>♡ synney<span>a tuff synth</span></header>
-		<canvas id='syn-viz' height='200'></canvas>
+	<header>♡ synney<span>a tuff synth</span></header>
+	<canvas id='syn-viz' height='150'></canvas>
   	<div id='syn-keys'></div>
 		<form class='syn-ctrl'>
 			<label>Instrument <select id='syn-ins' class='syn-inp'><option value='5'>Bell</option><option value='4'>Organ</option><option value='6'>Electric Piano</option><option value='0'>Sine</option><option value='1'>Square</option><option value='2'>Sawtooth</option><option value='3'>Triangle</option><option value='7'>Reese</option></select></label>
@@ -158,45 +317,1258 @@
 			<input type='reset' class='syn-inp'>
 		</form>
 		<form class='syn-ctrl'>
-			<label>Pluck <input id='syn-plk' class='syn-inp' type='checkbox'></label>
+			<label>Gain <input id='syn-gain' class='syn-inp' type='range' min='0' max='1' step='0.01' value='0.1'></label>
+			<label>Pan <input id='syn-pan' class='syn-inp' type='range' min='-1' max='1' step='0.01' value='0'></label>
+			<label>Pluck <label class='syn-toggle syn-inp'><input id='syn-plk' class='syn-inp' type='checkbox'></label></label>
 			<label>Decay <input id='syn-plk-dec' class='syn-inp' type='number' min='0' step='0.01' value='1'></label>
-			<input type='reset' class='syn-inp'>
 		</form>
 		<form class='syn-ctrl'>
-			<label>Gain <input id='syn-gain' class='syn-inp' type='range' min='0' max='1' step='0.01' value='0.5'></label>
-			<label>Pan <input id='syn-pan' class='syn-inp' type='range' min='-1' max='1' step='0.01' value='0'></label>
+			<label>Frequency ➜ Time<label class='syn-toggle syn-inp'><input id='syn-viz-data' class='syn-inp' type='checkbox'></label></label>
+			<label>Log Scale <label class='syn-toggle syn-inp'><input id='syn-log' class='syn-inp' type='checkbox' checked></label></label>
+			<label>
+				Shape
+				<select id='syn-viz-shape' class='syn-inp'>
+					<option>Line</option>
+					<option>Circle</option>
+					<option>Square</option>
+				</select>
+			</label>
 		</form>
+		<div class='syn-add'>
+			<div class='syn-menu syn-hidden' id='syn-add-menu'>
+				<div class='syn-menu-item' title='equalizer'>Equalizer</div>
+				<div class='syn-menu-item' title='widener'>Widener</div>
+				<div class='syn-menu-item' title='echo'>Echo</div>
+				<div class='syn-menu-item' title='wave-shaper'>Wave Shaper</div>
+				<div class='syn-menu-item' title='saturate'>Saturate</div>
+				<div class='syn-menu-item' title='stereo-shaper'>Stereo Shaper</div>
+				<div class='syn-menu-item' title='compressor'>Compressor</div>
+				<!--
+				<div class='syn-menu-item' title='ott'>OTT</div>
+				<div class='syn-menu-item' title='3d-pan'>Pan 3D</div>
+				<div class='syn-menu-item' title='convolver'>Convolver</div>
+				-->
+			</div>
+			<button id='syn-plugin-add' class='syn-inp'>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="m8annzmc1658515341cd866ecc3c4127b35729c9677b1ed2" viewBox="-13 -13 52 52" style="width: 52px;height: 52px;border-radius: inherit;"><defs><clipPath id="m8annzmc16585153_clipPath" x="-50%" y="-50%" width="200%" height="200%"><path id="m8annzmc16585153_fill_path" d="M0.01,0h25.98c0.00552,0 0.01,0.00448 0.01,0.01v25.98c0,0.00552 -0.00448,0.01 -0.01,0.01h-25.98c-0.00552,0 -0.01,-0.00448 -0.01,-0.01v-25.98c0,-0.00552 0.00448,-0.01 0.01,-0.01z" fill="white" clip-rule="nonzero"></path></clipPath></defs><g clip-path="url(#m8annzmc16585153_clipPath)"><g><animateTransform attributeName="transform" type="translate" values="0 0;6 0;-4.0167 0;0 0;0 0" dur="0.5s" repeatCount="1" calcMode="spline" keyTimes="0;0.4;0.7;1;1" keySplines="0 0 0 1;0.42 0 0.58 1;0.42 0 0.25 1;0.5 0.35 0.25 1" fill="freeze" begin="m8annzmc1658515341cd866ecc3c4127b35729c9677b1ed2.mouseenter"></animateTransform><g transform="matrix(1,0,0,1,12,2)"><path id="m8annzmd32573494_fill_path" d="M1,0v0c0.55228,0 1,0.44772 1,1v20c0,0.55228 -0.44772,1 -1,1v0c-0.55228,0 -1,-0.44772 -1,-1v-20c0,-0.55228 0.44772,-1 1,-1z" fill-rule="nonzero" fill="currentcolor" fill-opacity="1" style="mix-blend-mode:normal"></path></g></g><g><animateTransform attributeName="transform" type="translate" values="0 0;0 -6;0 4.019;0 0;0 0" dur="0.5s" repeatCount="1" calcMode="spline" keyTimes="0;0.4;0.7;1;1" keySplines="0 0 0 1;0.42 0 0.58 1;0.42 0 0.25 1;0.5 0.35 0.25 1" fill="freeze" begin="m8annzmc1658515341cd866ecc3c4127b35729c9677b1ed2.mouseenter"></animateTransform><g transform="matrix(0,-1,1,0,2,14)"><path id="m8annzme23016034_fill_path" d="M1,0v0c0.55228,0 1,0.44772 1,1v20c0,0.55228 -0.44772,1 -1,1v0c-0.55228,0 -1,-0.44772 -1,-1v-20c0,-0.55228 0.44772,-1 1,-1z" fill-rule="nonzero" fill="currentcolor" fill-opacity="1" style="mix-blend-mode:normal"></path></g></g></g></svg>
+			</button>
+		</div>
+		<div id='syn-plugins'></div>
 		<footer>Synney v1.1<br>© Frostbyte 2025. aGPLv3.0</footer>
 	</main>
+	<template id='syn-temp-echo'>
+		<details class='syn-effect'>
+			<summary>Echo<label class='syn-toggle syn-inp'><input type='checkbox' class='syn-effect-enable' checked></label><button class='syn-close'>✕</button></summary>
+			<div class='syn-ctrl'>
+				<label>Feedback<input class='syn-inp syn-echo-feedback' type='range' value='0.5' max='1' min='0' step='0.01'></label>
+				<label>Delay (s)<input class='syn-inp syn-echo-delay' type='range' value='0.1' max='1' min='0' step='0.01'></label>
+				<label>Blend<input class='syn-inp syn-echo-blend' type='range' value='0.2' max='1' min='0' step='0.01'></label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Dry<input class='syn-inp syn-effect-dry' type='range' value='0.8' max='1' min='0' step='0.01'></label>
+				<label>Wet<input class='syn-inp syn-effect-wet' type='range' value='0.8' max='1' min='0' step='0.01'></label>
+			</div>
+		</details>
+	</template>
+	<template id='syn-temp-widener'>
+		<details class='syn-effect'>
+			<summary>Widener<label class='syn-toggle syn-inp'><input type='checkbox' class='syn-effect-enable' checked></label><button class='syn-close'>✕</button></summary>
+			<div class='syn-ctrl'>
+				<label>Width<input class='syn-inp syn-widener-width' type='range' value='0.04' max='0.1' min='0' step='0.001'></label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Dry<input class='syn-inp syn-effect-dry' type='range' value='0' max='1' min='0' step='0.01'></label>
+				<label>Wet<input class='syn-inp syn-effect-wet' type='range' value='1' max='1' min='0' step='0.01'></label>
+			</div>
+		</details>
+	</template>
+	<template id='syn-temp-waveshaper'>
+		<details class='syn-effect'>
+			<summary>Wave Shaper<label class='syn-toggle syn-inp'><input type='checkbox' class='syn-effect-enable' checked></label><button class='syn-close'>✕</button></summary>
+			<div class='syn-ctrl'>
+				<canvas class='syn-waveshape-canvas syn-shape-canvas'></canvas>
+			</div>
+			<div class='syn-ctrl'>
+				<label>
+					Samples
+					<input class='syn-inp syn-waveshape-samples' type='number' value='2048' max='48000' min='2'/>
+				</label>
+				<label>
+					Oversampling
+					<select class='syn-inp syn-waveshape-oversampling'>
+						<option>none</option>
+						<option>2x</option>
+						<option>4x</option>
+					</select>
+				</label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Dry<input class='syn-inp syn-effect-dry' type='range' value='0.6' max='1' min='0' step='0.01'></label>
+				<label>Wet<input class='syn-inp syn-effect-wet' type='range' value='0.4' max='1' min='0' step='0.01'></label>
+			</div>
+		</details>
+	</template>
+	<template id='syn-temp-saturate'>
+		<details class='syn-effect'>
+			<summary>Saturate<label class='syn-toggle syn-inp'><input type='checkbox' class='syn-effect-enable' checked></label><button class='syn-close'>✕</button></summary>
+			<div class='syn-ctrl'>
+				<canvas class='syn-saturate-canvas syn-shape-canvas'></canvas>
+			</div>
+			<div class='syn-ctrl'>
+				<label>
+					Type
+					<select class='syn-inp syn-saturate-type'>
+						<option>Tube</option>
+						<option>Classic Tube</option>
+						<option>Soft Clipping</option>
+						<option>Hard Clipping</option>
+						<option>Exponential</option>
+						<option>Overdrive</option>
+						<option>Bitcrush</option>
+					</select>
+				</label>
+				<label>
+					Amount
+					<input class='syn-inp syn-saturate-amount' type='range' value='0.1' max='1' min='0' step='0.01'>
+				</label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>
+					Samples
+					<input class='syn-inp syn-saturate-samples' type='number' value='2048' max='48000' min='2'/>
+				</label>
+				<label>
+					Oversampling
+					<select class='syn-inp syn-saturate-oversampling'>
+						<option>none</option>
+						<option>2x</option>
+						<option>4x</option>
+					</select>
+				</label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Dry<input class='syn-inp syn-effect-dry' type='range' value='0' max='1' min='0' step='0.01'></label>
+				<label>Wet<input class='syn-inp syn-effect-wet' type='range' value='1' max='1' min='0' step='0.01'></label>
+			</div>
+		</details>
+	</template>
+	<template id='syn-temp-compressor'>
+		<details class='syn-effect'>
+			<summary>Compressor<label class='syn-toggle syn-inp'><input type='checkbox' class='syn-effect-enable' checked></label><button class='syn-close'>✕</button></summary>
+			<div class='syn-ctrl'>
+				<canvas class='syn-comp-canvas syn-shape-canvas'></canvas>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Threshold<input class='syn-inp syn-comp-threshold' type='range' value='-24' min='-60' max='0' step='1'></label>
+				<label>Knee<input class='syn-inp syn-comp-knee' type='range' value='30' min='0' max='40' step='1'></label>
+				<label>Ratio<input class='syn-inp syn-comp-ratio' type='range' value='12' min='1' max='20' step='0.1'></label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Attack<input class='syn-inp syn-comp-attack' type='range' value='0.003' min='0.001' max='1' step='0.001'></label>
+				<label>Release<input class='syn-inp syn-comp-release' type='range' value='0.25' min='0.05' max='2' step='0.01'></label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Makeup<input class='syn-inp syn-comp-makeup' type='range' value='1' min='0' max='2' step='0.01'></label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Dry<input class='syn-inp syn-effect-dry' type='range' value='0' max='1' min='0' step='0.01'></label>
+				<label>Wet<input class='syn-inp syn-effect-wet' type='range' value='1' max='1' min='0' step='0.01'></label>
+			</div>
+		</details>
+	</template>
+	<template id='syn-temp-stereo'>
+		<details class='syn-effect'>
+			<summary>Stereo Shaper<label class='syn-toggle syn-inp'><input type='checkbox' class='syn-effect-enable' checked></label><button class='syn-close'>✕</button></summary>
+			<div class='syn-ctrl'>
+				<label>Left ➜ Left<input class='syn-inp syn-stereo-ll' type='range' value='1' max='1' min='0' step='0.01'></label>
+				<label>Right ➜ Left<input class='syn-inp syn-stereo-rl' type='range' value='0' max='1' min='0' step='0.01'></label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Left ➜ Right<input class='syn-inp syn-stereo-lr' type='range' value='0' max='1' min='0' step='0.01'></label>
+				<label>Right ➜ Right<input class='syn-inp syn-stereo-rr' type='range' value='1' max='1' min='0' step='0.01'></label>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Dry<input class='syn-inp syn-effect-dry' type='range' value='0' max='1' min='0' step='0.01'></label>
+				<label>Wet<input class='syn-inp syn-effect-wet' type='range' value='1' max='1' min='0' step='0.01'></label>
+			</div>
+		</details>
+	</template>
+	<template id='syn-temp-equalizer'>
+		<details class='syn-effect'>
+			<summary>Equalizer<label class='syn-toggle syn-inp'><input type='checkbox' class='syn-effect-enable' checked></label><button class='syn-close'>✕</button></summary>
+			<div class='syn-ctrl'>
+				<canvas class='syn-equalizer-canvas syn-shape-canvas'></canvas>
+			</div>
+			<div class='syn-ctrl'>
+				<label>Dry<input class='syn-inp syn-effect-dry' type='range' value='0' max='1' min='0' step='0.01'></label>
+				<label>Wet<input class='syn-inp syn-effect-wet' type='range' value='1' max='1' min='0' step='0.01'></label>
+			</div>
+		</details>
+	</template>
 <script>
 /*
 Todo:
-Add log and normal scale selector for viz
 Add different viz modes (freq,time), style (line,bars,...), shape (circle,line,square)
-Add viz adjustment
+Add waveshaper "parts"
 Add unison
-Add echo plugin
-Add compressor plugin
-Add filter plugin
 Add OTT-like plugin
-Add widener plugin
 Add super panning plugin
-Add wave shaping plugin
 Add noise
 Add audio input
 Add convolver plugin
 Add sampler
-Add reverse polarity
 Add filtered noise Instrument
-Add clipper
-Add stereo shaper thingy
-
 Add midi support
+Add compressor visualization
+Add q slider to equalizer
+Add equalizer vizualizer
 
 Add phaser
 Add flanger
 Add chorus
 */
+//Screw 0.3 is INDEV. Use with caution
+class screwElement{
+	constructor(ctx=null,x=0,y=0,options={}){
+		this.ctx = ctx;
+		this.x = x;
+		this.y = y;
+		this.children = [];
+		this.intersected = false;
+		this.parent = null;
+		this.enabled = options.enabled ?? true;
+		this.visible = options.visible ?? true;
+		this.cvis = options.cvis ?? true;
+		this.cena = options.cena ?? true;
+		this.style = options.style ?? [];
+	}
+	addChild(e){
+		this.children.push(e);
+		e.parent = this;
+	}
+	removeChild(i){
+		this.children[i].parent = null;
+		this.children.splice(i,1);
+	}
+	removeChildFromElement(e){
+		const ind = this.children.indexOf(e);
+		if(ind < 0) return;
+		this.children[ind].parent = null;
+		this.children.splice(ind,1);
+	}
+	processStyle(ind){
+		if(this.style[ind]){
+			for(const [k,v] of this.style[ind]){
+				switch(k){
+					case 'setLineDash':
+					this.ctx.setLineDash(v);
+					break;
+					case 'setTransform':
+					this.ctx.setTransform(v);
+					break;
+					default:
+					this.ctx[k] = v;
+				}
+			}
+		}
+	}
+	getOffset(x=0,y=0){
+		let pc = [this.x+x,this.y+y];
+		let p = this.parent;
+		while(p != null){
+			pc[0]+=p.x;
+			pc[1]+=p.y;
+			p = p.parent;
+		}
+		return pc;
+	}
+	render(x=0,y=0){
+		if(this.visible && this.cvis){
+			this.renderChildren(x,y);
+		}
+	}
+	renderChildren(x=0,y=0){
+		for(let i=0;i<this.children.length;i++){
+			this.children[i].render(x,y);
+		}
+	}
+	intersect(cx,cy){
+		return false;
+	}
+	intersectChildren(cx,cy){
+		for(let i=0;i<this.children.length;i++){
+			if(this.children[i].intersect(cx,cy)){
+				return true;
+			}
+		}
+		return false;
+	}
+}
+class screwGroup extends screwElement{
+	constructor(ctx,x,y,options={}){
+		super(ctx,x,y,options);
+	}
+	intersect(cx,cy){
+		if(this.enabled && this.cena && this.children.length > 0){
+			this.intersected = this.intersectChildren(cx,cy)
+			return this.intersected;
+		}else{
+			return false;
+		}
+	}
+}
+class screwRectInt extends screwElement{
+	constructor(ctx,x,y,w,h,options={}){
+		super(ctx,x,y,options);
+		this.w = w;
+		this.h = h;
+	}
+	intersect(cx,cy){
+		if(this.enabled){
+			const rc = this.getOffset();
+			this.intersected = cx >= rc[0] && cx <= rc[0]+this.w && cy >= rc[1] && cy <= rc[1]+this.h;
+			if(!this.intersected && this.cena && this.children.length > 0){
+				this.intersected = this.intersectChildren(cx,cy);
+			}
+			return this.intersected;
+		}else{
+			return false;
+		}
+	}
+}
+class screwCircInt extends screwElement{
+	constructor(ctx,x,y,r,options={}){
+		super(ctx,x,y,options);
+		this.r = r;
+	}
+	intersect(cx,cy){
+		if(this.enabled){
+			const rc = this.getOffset();
+			this.intersected = Math.hypot(rc[0]-cx,rc[1]-cy) <= this.r;
+			if(!this.intersected && this.cena && this.children.length > 0){
+				this.intersected = this.intersectChildren(cx,cy);
+			}
+			return this.intersected;
+		}else{
+			return false;
+		}
+	}
+}
+class screwLineInt extends screwElement{
+	constructor(ctx,bx,by,ex,ey,options={}){
+		super(ctx,bx,by,options);
+		this.ex = ex;
+		this.ey = ey;
+		this.r = options.r || 5;
+	}
+	intersect(cx,cy){
+		if(this.enabled){
+			const rc = this.parent.getOffset();
+			const a = (this.ey-this.y);
+			const b = (this.ex-this.x);
+			if(a == 0){
+				//no rise
+				let	rbx = this.x;
+				let	rex = this.ex;
+				if(rbx > rex){
+					rbx = this.ex;
+					rex = this.x;
+				}
+				rex = cx-(rex+rc[0]);
+				rbx = cx-(rbx+rc[0]);
+				const d = cy-(rc[1]+this.y);
+				if(rex > 0){
+					this.intersected = (rex*rex)+(d*d) <= this.r*this.r;
+				}else if(rbx < 0){
+					this.intersected = (rbx*rbx)+(d*d) <= this.r*this.r;
+				}else{
+					this.intersected = Math.abs(d) <= this.r;
+				}
+			}else if(b == 0){
+				//no run
+				let	rby = this.y;
+				let	rey = this.ey;
+				if(rby > rey){
+					rby = this.ey;
+					rey = this.y;
+				}
+				rey = cy-(rey+rc[1]);
+				rby = cy-(rby+rc[1]);
+				const d = cx-(rc[0]+this.x);
+				if(rey > 0){
+					this.intersected = (rey*rey)+(d*d) <= this.r*this.r;
+				}else if(rby < 0){
+					this.intersected = (rby*rby)+(d*d) <= this.r*this.r;
+				}else{
+					this.intersected = Math.abs(d) <= this.r;
+				}
+			}else{
+				const rx = this.x+rc[0];
+				const ry = this.y+rc[1];
+				let	rbx = rx;
+				let	rex = this.ex+rc[0];
+				if(this.x > this.ex){
+					rbx = rex;
+					rex = rx;
+				}
+				const sl = a/b;
+				const int = Math.min(Math.max((((1/sl)*cx)+cy-ry+(sl*rx))/((1/sl)+sl),rbx),rex);
+				const c1 = cx-int;
+				const c2 = cy-((sl*(int-rx))+ry);
+				this.intersected = (c1*c1)+(c2*c2) <= this.r*this.r;
+			}
+			if(!this.intersected && this.cena && this.children.length > 0){
+				this.intersected = this.intersectChildren(cx,cy);
+			}
+			return this.intersected;
+		}else{
+			return false;
+		}
+	}
+}
+class screwTexInt extends screwElement{
+	constructor(ctx,x,y,t,options={}){
+		super(ctx,x,y,options);
+		this.t = t;
+		this.style.length < 1 && this.style.push(new Map());
+	}
+	intersect(cx,cy){
+		if(this.enabled){
+			const rc = this.parent.getOffset();
+			cx = cx-rc[0];
+			cy = cy-rc[1];
+			this.ctx.save();
+			this.processStyle(0);
+			const m = this.ctx.measureText(this.t);
+			this.ctx.restore();
+			//(this.max ? this.max : m.width)
+			this.intersected = (cx >= this.x-m.actualBoundingBoxLeft && cx <= this.x+m.actualBoundingBoxRight) && (cy <= this.y+m.actualBoundingBoxDescent && cy >= this.y-m.actualBoundingBoxAscent);
+			if(!this.intersected && this.cena && this.children.length > 0){
+				this.intersected = this.intersectChildren(cx,cy);
+			}
+			return this.intersected;
+		}else{
+			return false;
+		}
+	}
+}
+class screwTex extends screwTexInt{
+	constructor(ctx,x,y,t,options={}){
+		super(ctx,x,y,t,options);
+		this.fvis = options.fvis ?? true;
+		this.svis = options.svis ?? true;
+		this.style.length < 2 && this.style.push(new Map());
+	}
+	render(x=0,y=0){
+		if(this.visible){
+			const rc = this.getOffset(x,y);
+			this.ctx.save();
+			if(this.fvis){
+				this.processStyle(0);
+				this.ctx.fillText(this.t,rc[0],rc[1]);
+			}
+			//this.ctx.restore();
+			if(this.svis){
+				this.processStyle(1);
+				this.ctx.strokeText(this.t,rc[0],rc[1]);
+			}
+			this.ctx.restore();
+			if(this.cvis){
+				this.renderChildren(x,y);
+			}
+		}
+	}
+}
+class screwRect extends screwRectInt{
+	constructor(ctx,x,y,w,h,options={}){
+		super(ctx,x,y,w,h,options);
+		this.fvis = options.fvis ?? true;
+		this.svis = options.svis ?? true;
+		for(let i=this.style.length;i<2;i++){
+			this.style.push(new Map());
+		}
+	}
+	render(x=0,y=0){
+		if(this.visible){
+			const rc = this.getOffset(x,y);
+			this.ctx.save();
+			if(this.fvis){
+				this.processStyle(0);
+				this.ctx.fillRect(rc[0],rc[1],this.w,this.h);
+			}
+			//this.ctx.restore();
+			if(this.svis){
+				this.processStyle(1);
+				this.ctx.strokeRect(rc[0],rc[1],this.w,this.h);
+			}
+			this.ctx.restore();
+			if(this.cvis){
+				this.renderChildren(x,y);
+			}
+		}
+	}
+}
+class screwLine extends screwLineInt{
+	constructor(ctx,bx,by,ex,ey,options={}){
+		super(ctx,bx,by,ex,ey,options);
+		this.style.length < 1 && this.style.push(new Map());
+	}
+	render(x=0,y=0){
+		if(this.visible){
+			const rc = this.parent.getOffset(x,y);
+			this.ctx.save();
+			this.processStyle(0);
+			this.ctx.beginPath();
+			this.ctx.moveTo(this.x+rc[0],this.y+rc[1]);
+			this.ctx.lineTo(this.ex+rc[0],this.ey+rc[1]);
+			this.ctx.stroke();
+			this.ctx.restore();
+			if(this.cvis){
+				this.renderChildren(x,y);
+			}
+		}
+	}
+}
+class screwCirc extends screwCircInt{
+	constructor(ctx,x,y,r,options={}){
+		super(ctx,x,y,r,options);
+		this.fvis = options.fvis ?? true;
+		this.svis = options.svis ?? true;
+		for(let i=this.style.length;i<2;i++){
+			this.style.push(new Map());
+		}
+	}
+	render(x=0,y=0){
+		if(this.visible){
+			const rc = this.getOffset(x,y);
+			const base = new Path2D();
+			this.ctx.save();
+			base.arc(rc[0],rc[1],this.r,0,2*Math.PI);
+			if(this.fvis){
+				this.processStyle(0);
+				this.ctx.fill(base);
+			}
+			//this.ctx.restore();
+			if(this.svis){
+				this.processStyle(1);
+				this.ctx.stroke(base);
+			}
+			this.ctx.restore();
+			if(this.cvis){
+				this.renderChildren(x,y);
+			}
+		}
+	}
+}
+class screwRoundRect extends screwRectInt{
+	constructor(ctx,x,y,w,h,r,options={}){
+		super(ctx,x,y,w,h,options);
+		this.fvis = options.fvis ?? true;
+		this.svis = options.svis ?? true;
+		this.r = r;
+		for(let i=this.style.length;i<2;i++){
+			this.style.push(new Map());
+		}
+	}
+	render(x=0,y=0){
+		if(this.visible){
+			const rc = this.getOffset(x,y);
+			const base = new Path2D();
+			this.ctx.save();
+			if(this.r==0){
+				base.rect(rc[0],rc[1],this.w,this.h);
+			}else{
+				base.roundRect(rc[0],rc[1],this.w,this.h,this.r);
+			}
+			if(this.fvis){
+				this.processStyle(0);
+				this.ctx.fill(base);
+			}
+			//this.ctx.restore();
+			if(this.svis){
+				this.processStyle(1);
+				this.ctx.stroke(base);
+			}
+			this.ctx.restore();
+			if(this.cvis){
+				this.renderChildren(x,y);
+			}
+		}
+	}
+}
+//frostInteract 1.2
+class frostInteract {
+	constructor(canv,interactables,beforeRender,props={}){
+		this.canv = canv;
+		this.ctx = canv.getContext('2d');
+		this.active = null;
+		this.md = false;
+		this.interactables = interactables;
+		this.beforeRender = beforeRender;
+		this.beforeInteract = props.beforeInteract;
+		this.afterInteract = props.afterInteract;
+		this.afterMove = props.afterMove;
+		this.actMouseDown = this.actMouseDown.bind(this);
+		this.actMouseMove = this.actMouseMove.bind(this);
+		this.actMouseUp = this.actMouseUp.bind(this);
+		this.canv.addEventListener("mousedown",this.actMouseDown);
+		this.canv.addEventListener("mouseup",this.actMouseUp);
+		this.canv.addEventListener("mousemove",this.actMouseMove);
+		this.radius = props.radius ?? 5;
+	}
+	renderInteract() {
+		this.ctx.clearRect(0,0,this.canv.width,this.canv.height);
+		this.beforeRender();
+		for(let i=0;i<this.interactables.length;i++){
+			this.ctx.beginPath();
+			this.ctx.arc(this.interactables[i][0],this.interactables[i][1],this.radius,0,Math.PI*2);
+			this.ctx.fill();
+			this.ctx.stroke();
+		}
+	}
+	actMouseDown(e){
+		this.md=true;
+		for(let i=0;i<this.interactables.length;i++){
+			if(Math.sqrt((this.interactables[i][0]-e.offsetX)**2 + (this.interactables[i][1]-e.offsetY)**2) <= this.radius){this.beforeInteract && this.beforeInteract(e);this.active = i;break;};
+		}
+	}
+	actMouseUp(e){
+		this.active=null;
+		this.md=false;
+		this.afterInteract && this.afterInteract(e);
+	}
+	actMouseMove(e){
+		if(this.active != null && this.md){
+			this.interactables[this.active][0]=e.offsetX;
+			this.interactables[this.active][1]=e.offsetY;
+			this.renderInteract();
+			this.afterMove && this.afterMove(e);
+		}
+	}
+}
+class SynneyEffect {
+	constructor(ctx,target,dryValue=0,wetValue=1){
+		this.ctx = ctx;
+		this.target = target;
+		this.input = this.ctx.createGain();
+		this.input.gain.value = 1;
+		this.wetValue = wetValue;
+		this.dryValue = dryValue;
+		this.wet = this.ctx.createGain();
+		this.wet.gain.value = wetValue;
+		this.wet.connect(this.target);
+		this.dry = this.ctx.createGain();
+		this.dry.gain.value = dryValue;
+		this.dry.connect(this.target);
+		this.input.connect(this.dry);
+		this.effectEnabled = true;
+	}
+	set enabled(value){
+		if(this.effectEnabled === value) return;
+		this.effectEnabled = value;
+		if(value){
+			this.wet.gain.value = this.wetValue;
+			this.dry.gain.value = this.dryValue;
+		}else{
+			this.wet.gain.value = 0;
+			this.dry.gain.value = 1;
+		}
+	}
+	get enabled(){
+		return this.effectEnabled;
+	}
+	connect(target){
+		this.target = target;
+		this.wet.connect(this.target);
+		this.dry.connect(this.target);
+	}
+	disconnect(){
+		this.wet.disconnect();
+		this.dry.disconnect();
+	}
+	set wetGain(value){
+		this.wetValue = value;
+		if(this.effectEnabled){
+			this.wet.gain.value = value;
+		}
+	}
+	set dryGain(value){
+		this.dryValue = value;
+		if(this.effectEnabled){
+			this.dry.gain.value = value;
+		}
+	}
+	getSettings(){return {}}
+}
+class SynneyEcho extends SynneyEffect {
+	constructor(ctx, target, props = {}) {
+		const {
+			delay = 0.25,
+			feedbackGain = 0.5,
+			blend = 0.5,
+			dry = 0,
+			wet = 1
+		} = props;
+		super(ctx, target, dry, wet);
+		this.merger = this.ctx.createChannelMerger();
+		this.delayL = this.ctx.createDelay(1);
+		this.delayR = this.ctx.createDelay(1);
+		this.delayL.delayTime.value = delay;
+		this.delayR.delayTime.value = delay;
+		this.feedbackGainL = this.ctx.createGain();
+		this.feedbackGainL.gain.value = feedbackGain;
+		this.feedbackGainR = this.ctx.createGain();
+		this.feedbackGainR.gain.value = feedbackGain;
+		this.blendGainL = this.ctx.createGain();
+		this.blendGainR = this.ctx.createGain();
+		this.blendGainL.gain.value = blend;
+		this.blendGainR.gain.value = blend;
+		this.input.connect(this.feedbackGainL);
+		this.feedbackGainL.connect(this.delayL);
+		this.delayL.connect(this.feedbackGainR);
+		this.feedbackGainR.connect(this.delayR);
+		this.delayR.connect(this.feedbackGainL);
+		this.delayL.connect(this.merger,0,0);
+		this.delayR.connect(this.merger,0,1);
+		this.delayL.connect(this.blendGainL);
+		this.delayR.connect(this.blendGainR);
+		this.blendGainR.connect(this.merger,0,0);
+		this.blendGainL.connect(this.merger,0,1);
+		this.merger.connect(this.wet);
+	}
+	set delayTime(value){
+		this.delayL.delayTime.value = value;
+		this.delayR.delayTime.value = value;
+	}
+	set feedback(value){
+		this.feedbackGainL.gain.value = value;
+		this.feedbackGainR.gain.value = value;
+	}
+	set blend(value){
+		this.blendGainL.gain.value = value;
+		this.blendGainR.gain.value = value;
+	}
+	getSettings(){
+		return {
+			delay: this.delayL.delayTime.value,
+			feedbackGain: this.feedbackGainL.gain.value,
+			blend: this.blendGainL.gain.value,
+			dry: this.dryGain.gain.value,
+			wet: this.wetGain.gain.value
+		};
+	}
+}
+class SynneyWidener extends SynneyEffect {
+	constructor(ctx, target, props) {
+		const {
+			width = 0.01,
+			dry = 0,
+			wet = 1
+		} = props;
+		super(ctx, target, dry, wet);
+		//HAAS
+		this.splitter = this.ctx.createChannelSplitter(2);
+		this.rightDelay = this.ctx.createDelay();
+		this.rightDelay.delayTime.value = width;
+		this.merger = this.ctx.createChannelMerger(2);
+		this.input.connect(this.splitter);
+		this.splitter.connect(this.merger, 0, 0);
+		this.splitter.connect(this.rightDelay, 1, 0);
+		this.rightDelay.connect(this.merger, 0, 1);
+		this.merger.connect(this.wet);
+		this.width = width;
+	}
+	setWidth(value) {
+		this.rightDelay.delayTime.value = value;
+		this.width = value;
+	}
+}
+class SynneyEqualizer extends SynneyEffect {
+	constructor(ctx, target, props={}) {
+		const {
+			bands = [],
+			dry = 0,
+			wet = 1
+		} = props;
+		super(ctx, target, dry, wet);
+		this.filters = [];
+		let previous = this.input;
+		for(const band of bands){
+			const filter = this.ctx.createBiquadFilter();
+			filter.type = band.type ?? 'peaking';
+			filter.frequency.value = band.frequency ?? 0;
+			filter.gain.value = band.gain ?? 0;
+			filter.Q.value = band.Q ?? 1;
+			this.filters.push(filter);
+			previous.connect(filter);
+			previous = filter;
+		}
+		previous.connect(this.wet);
+	}
+	addBand(band) {
+		// band: { type: string, frequency: number, gain: number, Q: number }
+		const filter = this.ctx.createBiquadFilter();
+		filter.type = band.type ?? 'peaking';
+		filter.frequency.value = band.frequency ?? 0;
+		filter.gain.value = band.gain ?? 0;
+		filter.Q.value = band.Q ?? 1;
+
+		const previous = this.filters.length === 0 ? this.input : this.filters[this.filters.length - 1];
+
+		previous.disconnect(this.wet);
+		previous.connect(filter);
+		filter.connect(this.wet);
+		this.filters.push(filter);
+	}
+	removeBand(bandIdx) {
+		if (bandIdx < 0 || bandIdx >= this.filters.length) return;
+		this.filters[bandIdx].disconnect();
+		const prevNode = bandIdx === 0 ? this.input : this.filters[bandIdx - 1];
+		const nextNode = this.filters[bandIdx + 1] ?? this.wet;
+		prevNode.disconnect(this.filters[bandIdx]);
+		prevNode.connect(nextNode);
+		this.filters.splice(bandIdx, 1);
+	}
+	setBandGain(bandIdx, gain) {
+		if(this.filters[bandIdx])this.filters[bandIdx].gain.value = gain;
+	}
+	setBandFrequency(bandIdx, freq) {
+		if(this.filters[bandIdx])this.filters[bandIdx].frequency.value = freq;
+	}
+	setBandType(bandIdx, type) {
+		if(this.filters[bandIdx])this.filters[bandIdx].type = type;
+	}
+	setBandQ(bandIdx, Q) {
+		if(this.filters[bandIdx])this.filters[bandIdx].Q.value = Q;
+	}
+	getBandGain(bandIdx) {
+		return this.filters?.[bandIdx].gain.value;
+	}
+	getBandFrequency(bandIdx) {
+		return this.filters?.[bandIdx].frequency.value;
+	}
+	getBandType(bandIdx) {
+		return this.filters?.[bandIdx].type;
+	}
+	getBandQ(bandIdx) {
+		return this.filters?.[bandIdx].Q.value;
+	}
+	getBandSettings() {
+		const bands = new Array(this.filters.length);
+		for(let i=0;i<this.filters.length;i++){
+			const curFilter = this.filters[i];
+			bands[i] = {type:curFilter.type,frequency:curFilter.frequency.value,gain:curFilter.gain.value,Q:curFilter.Q.value};
+		}
+		return bands;
+	}
+}
+class SynneyCompressor extends SynneyEffect {
+	constructor(ctx, target, props) {
+		const {
+			threshold = -24,
+			knee = 30,
+			ratio = 12,
+			attack = 0.003,
+			release = 0.25,
+			makeup = 1,
+			dry = 0,
+			wet = 1
+		} = props;
+		super(ctx, target, dry, wet);
+		this.compressor = ctx.createDynamicsCompressor();
+		this.compressor.threshold.value = threshold;
+		this.compressor.knee.value = knee;
+		this.compressor.ratio.value = ratio;
+		this.compressor.attack.value = attack;
+		this.compressor.release.value = release;
+		this.makeupGain = ctx.createGain();
+		this.makeupGain.gain.value = makeup;
+		this.input.connect(this.compressor);
+		this.compressor.connect(this.makeupGain);
+		this.makeupGain.connect(this.wet);
+	}
+	set threshold(value) {
+		this.compressor.threshold.value = value;
+	}
+	set knee(value) {
+		this.compressor.knee.value = value;
+	}
+	set ratio(value) {
+		this.compressor.ratio.value = value;
+	}
+	set attack(value) {
+		this.compressor.attack.value = value;
+	}
+	set release(value) {
+		this.compressor.release.value = value;
+	}
+	set makeup(value) {
+		this.makeupGain.gain.value = value;
+	}
+	getSettings() {
+		return {
+			threshold: this.compressor.threshold.value,
+			knee: this.compressor.knee.value,
+			ratio: this.compressor.ratio.value,
+			attack: this.compressor.attack.value,
+			release: this.compressor.release.value,
+			makeup: this.makeupGain.gain.value
+		};
+	}
+}
+class SynneyWaveShaper extends SynneyEffect {
+	constructor(ctx, target, props={}){
+		const {
+			curve = null,
+			oversample = 'none',
+			dry = 0,
+			wet = 1
+		} = props;
+		super(ctx, target, dry, wet);
+		this.waveShaper = ctx.createWaveShaper();
+		this.waveShaper.oversample = oversample;
+		curve && this.setCurve(curve);
+		this.input.connect(this.waveShaper);
+		this.waveShaper.connect(this.wet);
+		this.curve = curve;
+		this.oversample = oversample;
+	}
+	setCurve(curve){
+		this.waveShaper.curve = curve;
+		this.curve = curve;
+	}
+	setOversample(val){
+		this.waveShaper.oversample = val;
+		this.oversample = val;
+	}
+	getSettings(){
+		return {
+			curve: this.curve,
+			oversample: this.oversample
+		};
+	}
+}
+class SynneySaturate extends SynneyEffect {
+	constructor(ctx, target, props={}) {
+		const {
+			type = 'Tube', 
+			amount = 0.5, 
+			oversample = 'none', 
+			samples = 1024, 
+			dry = 0, 
+			wet = 1
+		} = props;
+		super(ctx, target, dry, wet);
+		this.waveShaper = ctx.createWaveShaper();
+		this.waveShaper.oversample = oversample;
+		this.type = type;
+		this.amount = amount;
+		this.samples = samples;
+		this.curve = SynneySaturate.getCurve(type, amount, this.samples);
+		this.waveShaper.curve = this.curve;
+		this.input.connect(this.waveShaper);
+		this.waveShaper.connect(this.wet);
+	}
+	static getCurve(type, amount, samples= 2048){
+		const curve = new Float32Array(samples);
+		const a = Math.max(0.0001, amount); // Avoid division by zero or log(0)
+		switch(type){
+			case "Tube":
+				const tubeAmt = a * 10 + 1;
+				for (let i=0;i<samples;++i){
+					const x = (i * 2) / (samples- 1) - 1;
+					curve[i] = Math.tanh(x * tubeAmt);
+				}
+				break;
+			case "Soft Clipping":
+				//
+				for (let i=0;i<samples;++i){
+					const x = (i * 2) / (samples- 1) - 1;
+					curve[i] = Math.abs(x) < a
+						? x
+						: (x > 0
+							? (a + (1 - a) * Math.tanh((x - a)/(1 - a)))
+							: (-a + (1 - a) * Math.tanh((x + a)/(1 - a))));
+				}
+				break;
+			case "Hard Clipping":
+				const bound = 1 - a;
+				for (let i=0;i<samples;++i){
+					const x = (i * 2) / (samples- 1) - 1;
+					curve[i] = Math.max(-bound, Math.min(bound, x));
+				}
+				break;
+			case "Exponential":
+				const expAmt = a * 10 + 1;
+				for (let i=0;i<samples;++i){
+					const x = (i * 2) / (samples- 1) - 1;
+					curve[i] = Math.sign(x) * (1 - Math.exp(-Math.abs(x) * expAmt));
+				}
+				break;
+			case "Overdrive":
+				const ovrAmt = a * 10 + 1;
+				for (let i=0;i<samples;++i){
+					const x = (i * 2) / (samples- 1) - 1;
+					curve[i] = (x * (1+ovrAmt)) / (1 + ovrAmt*Math.abs(x));
+				}
+				break;
+			case "Bitcrush":
+				//2-16
+				const steps = Math.floor(2 + (1 - amount) * 14);
+				for (let i=0;i<samples;++i){
+					const x = (i * 2) / (samples- 1) - 1;
+					curve[i] = Math.round(x * steps) / steps;
+				}
+				break;
+			case "Classic Tube":
+				const ctAmt = 1 + a * 10;
+				const ctNorm = Math.atan(ctAmt);
+				for (let i=0;i<samples;++i){
+					const x = (i * 2) / (samples- 1) - 1;
+					curve[i] = Math.atan(ctAmt * x) / ctNorm;
+				}
+				break;
+			default:
+				for (let i=0;i<samples;++i){
+					curve[i] = (i * 2) / (samples - 1) - 1;
+				}
+		}
+		return curve;
+	}
+	setType(type){
+		this.type = type;
+		this.curve = SynneySaturate.getCurve(type, this.amount, this.samples);
+		this.waveShaper.curve = this.curve;
+	}
+	setAmount(amount){
+		this.amount = amount;
+		this.curve = SynneySaturate.getCurve(this.type, amount, this.samples);
+		this.waveShaper.curve = this.curve;
+	}
+	setOversample(oversample){
+		this.waveShaper.oversample = oversample;
+	}
+	setSamples(samples){
+		this.samples = samples;
+		this.curve = SynneySaturate.getCurve(this.type, this.amount, this.samples);
+		this.waveShaper.curve = this.curve;
+	}
+	getSettings(){
+		return {
+			type: this.type,
+			amount: this.amount,
+			oversample: this.waveShaper.oversample,
+			samples: this.samples
+		};
+	}
+}
+class SynneyStereoShaper extends SynneyEffect {
+	constructor(ctx, target, props = {}) {
+		const {
+			ll = 1,
+			rl = 0,
+			lr = 0,
+			rr = 1,
+			dry = 0,
+			wet = 1
+		} = props;
+		super(ctx, target, dry, wet);
+		this.merger = ctx.createChannelMerger(2);
+		this.splitter = ctx.createChannelSplitter(2);
+
+		this.gLL = ctx.createGain();
+		this.gRL = ctx.createGain();
+		this.gLR = ctx.createGain();
+		this.gRR = ctx.createGain();
+
+		this.gLL.gain.value = ll;
+		this.gRL.gain.value = rl;
+		this.gLR.gain.value = lr;
+		this.gRR.gain.value = rr;
+
+		this.splitter.connect(this.gLL, 0);
+		this.gLL.connect(this.merger, 0, 0);
+		this.splitter.connect(this.gRL, 1); 
+		this.gRL.connect(this.merger, 0, 0);
+		this.splitter.connect(this.gLR, 0); 
+		this.gLR.connect(this.merger, 0, 1);
+		this.splitter.connect(this.gRR, 1); 
+		this.gRR.connect(this.merger, 0, 1);
+
+		this.input.connect(this.splitter);
+		this.merger.connect(this.wet);
+	}
+	set ll(value) {
+		this.gLL.gain.value = value;
+	}
+	set rl(value) {
+		this.gRL.gain.value = value;
+	}
+	set lr(value) {
+		this.gLR.gain.value = value;
+	}
+	set rr(value) {
+		this.gRR.gain.value = value;
+	}
+	getSettings() {
+		return {
+			ll: this.gLL.gain.value,
+			rl: this.gRL.gain.value,
+			lr: this.gLR.gain.value,
+			rr: this.gRR.gain.value,
+			dry: this.dryGain.gain.value,
+			wet: this.wetGain.gain.value
+		};
+	}
+}
+
+class SynneyEffectSystem {
+	constructor(ctx,input,target){
+		this.ctx = ctx;
+		this.input = input;
+		this.target = target;
+		this.effects = [];
+		this.input.connect(this.target);
+	}
+	addEffect(effect){
+		if(this.effects.length > 0){
+			const previousEffect = this.effects[this.effects.length-1];
+			previousEffect.disconnect();
+			previousEffect.connect(effect.input);
+		}else{
+			this.input.disconnect();
+			this.input.connect(effect.input);
+		}
+		this.effects.push(effect);
+	}
+	addEcho(props={}){
+		const effect = new SynneyEcho(this.ctx, this.target, props);
+		this.addEffect(effect);
+		return effect;
+	}
+	addWidener(props={}){
+		const effect = new SynneyWidener(this.ctx,this.target,props);
+		this.addEffect(effect);
+		return effect;
+	}
+	addCompressor(props={}) {
+		const effect = new SynneyCompressor(this.ctx, this.target, props);
+		this.addEffect(effect);
+		return effect;
+	}
+	addWaveShaper(props={}) {
+		const effect = new SynneyWaveShaper(this.ctx, this.target, props);
+		this.addEffect(effect);
+		return effect;
+	}
+	addSaturate(props={}) {
+		const effect = new SynneySaturate(this.ctx, this.target, props);
+		this.addEffect(effect);
+		return effect;
+	}
+	addStereoShaper(props={}) {
+		const effect = new SynneyStereoShaper(this.ctx, this.target, props);
+		this.addEffect(effect);
+		return effect;
+	}
+	addEqualizer(props={}) {
+		const effect = new SynneyEqualizer(this.ctx, this.target, props);
+		this.addEffect(effect);
+		return effect;
+	}
+	removeEffect(effect){
+		const idx = this.effects.indexOf(effect);
+		if(idx===-1) return;
+		effect.disconnect();
+		const prev = this.effects[idx-1];
+		const next = this.effects[idx+1];
+		if(prev && next){
+			prev.disconnect();
+			prev.connect(next.input);
+		}else if(prev){
+			prev.disconnect();
+			prev.connect(this.target);
+		}else if(next){
+			this.input.disconnect();
+			this.input.connect(next.input);
+		}else{
+			this.input.disconnect();
+			this.input.connect(this.target);
+		}
+		this.effects.splice(idx, 1);
+	}
+}
+
+function generateScrewDropdown(t){
+	return t.charAt(0).toUpperCase()+t.substring(1)+' ▼';
+}
+
+function createEqualizerPoint(ctx,x,y,n,type){
+	const point = new screwGroup(ctx,x,y);
+	const circle = new screwCirc(ctx,0,0,12);
+	circle.style[0].set('fillStyle','#8a3a47');
+	circle.style[1].set('strokeStyle','#ff697d');
+	circle.style[1].set('lineWidth',2);
+	const text = new screwTex(ctx,0,0,n,{svis:false});
+	text.style[0].set('font','bold 15px sans-serif');
+	text.style[0].set('textAlign','center');
+	text.style[0].set('textBaseline','middle');
+	text.style[0].set('fillStyle','white');
+	const infoFrame = new screwRoundRect(ctx,10,0,100,82,5);
+	infoFrame.style[0].set('fillStyle','#8a3a47');
+	infoFrame.style[1].set('strokeStyle','#ff697d');
+	infoFrame.style[1].set('lineWidth',2);
+	const typeLabel = new screwTex(ctx,5,5,'Type',{svis:false});
+	typeLabel.style[0].set('font','8px sans-serif');
+	typeLabel.style[0].set('textBaseline','top');
+	typeLabel.style[0].set('fillStyle','white');
+	const typeText = new screwTex(ctx,5,15,generateScrewDropdown(type),{svis:false});
+	typeText.style[0].set('font','bold 12px sans-serif');
+	typeText.style[0].set('fillStyle','white');
+	typeText.style[0].set('textBaseline','top');
+	const frequencyLabel = new screwTex(ctx,5,30,'Frequency',{svis:false});
+	frequencyLabel.style[0].set('font','8px sans-serif');
+	frequencyLabel.style[0].set('textBaseline','top');
+	frequencyLabel.style[0].set('fillStyle','white');
+	const frequencyText = new screwTex(ctx,5,40,'Null',{svis:false});
+	frequencyText.style[0].set('font','12px sans-serif');
+	frequencyText.style[0].set('fillStyle','white');
+	frequencyText.style[0].set('textBaseline','top');
+	const gainLabel = new screwTex(ctx,55,30,'Gain',{svis:false});
+	gainLabel.style[0].set('font','8px sans-serif');
+	gainLabel.style[0].set('textBaseline','top');
+	gainLabel.style[0].set('fillStyle','white');
+	const gainText = new screwTex(ctx,55,40,'Null',{svis:false});
+	gainText.style[0].set('font','12px sans-serif');
+	gainText.style[0].set('fillStyle','white');
+	gainText.style[0].set('textBaseline','top');
+	const qLabel = new screwTex(ctx,5,55,'Q factor',{svis:false});
+	qLabel.style[0].set('font','8px sans-serif');
+	qLabel.style[0].set('textBaseline','top');
+	qLabel.style[0].set('fillStyle','white');
+	const qText = new screwTex(ctx,5,65,'1.000',{svis:false});
+	qText.style[0].set('font','12px sans-serif');
+	qText.style[0].set('fillStyle','white');
+	qText.style[0].set('textBaseline','top');
+	const closeButton = new screwTex(ctx,80,5,'✕',{svis:false});
+	closeButton.style[0].set('font','bold 15px sans-serif');
+	closeButton.style[0].set('fillStyle','white');
+	closeButton.style[0].set('textBaseline','top');
+	infoFrame.addChild(typeText);
+	infoFrame.addChild(frequencyText);
+	infoFrame.addChild(gainText);
+	infoFrame.addChild(qText);
+	infoFrame.addChild(closeButton);
+	infoFrame.addChild(typeLabel);
+	infoFrame.addChild(frequencyLabel);
+	infoFrame.addChild(gainLabel);
+	infoFrame.addChild(qLabel);
+	point.addChild(circle);
+	point.addChild(text);
+	point.addChild(infoFrame);
+	return point;
+}
+
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 const keyMaps = [
 	{'z':-21,'s':-20,'x':-19,'d':-18,'c':-17,'v':-16,'g':-15,'b':-14,'h':-13,'n':-12,'j':-11,'m':-10,',':-9,'l':-8,'.':-7,';':-6,'/':-5,'q':-4,'2':-3,'w':-2,'3':-1,'e':0,'4':1,'r':2,'t':3,'6':4,'y':5,'7':6,'u':7,'i':8,'9':9,'o':10,'0':11,'p':12,'-':13,'[':14,']':15},
@@ -205,26 +1577,20 @@ const keyMaps = [
 	{'a':-9,'w':-8,'s':-7,'e':-6,'d':-5,'f':-4,'t':-3,'g':-2,'y':-1,'h':0,'u':1,'j':2,'k':3,'o':4,'l':5,'p':6,';':7,'\'':8,']':9}
 ];
 const blackSet = new Set([1,3,6,8,10]);
-
 const masterAnal = ctx.createAnalyser();
-masterAnal.fftSize = 1024;
-masterAnal.smoothingTimeConstant = 0.85;
+masterAnal.fftSize = 512;
+masterAnal.smoothingTimeConstant = 0.75;
 const masterGain = ctx.createGain();
 masterGain.connect(ctx.destination);
 masterGain.connect(masterAnal);
 const masterPan = ctx.createStereoPanner();
 masterPan.connect(masterGain);
-const master = ctx.createGain();
-/*
-const masterecho = ctx.createDelay(1);
-masterecho.delayTime.value = 0.25
-const masterechogain = ctx.createGain();
-masterechogain.gain.value = 0.5;
-masterecho.connect(masterechogain);
-masterechogain.connect(master);
-master.connect(masterecho);
-*/
-master.connect(masterPan);
+const master = ctx.createGain()	;
+const masterMerger = ctx.createChannelMerger();
+master.connect(masterMerger,0,0);
+master.connect(masterMerger,0,1);
+const effectSystem = new SynneyEffectSystem(ctx,masterMerger,masterPan);
+const nyquist = ctx.sampleRate*0.5;
 
 const insSel = document.getElementById('syn-ins');
 const mgainInp = document.getElementById('syn-gain');
@@ -236,17 +1602,509 @@ const atkInp = document.getElementById('syn-atk');
 const relInp = document.getElementById('syn-rel');
 const trsInp = document.getElementById('syn-trs');
 const decInp = document.getElementById('syn-dec');
+const logChk = document.getElementById('syn-log');
+const vizSelectShape = document.getElementById('syn-viz-shape');
+const vizTimeChk = document.getElementById('syn-viz-data');
 const headerCont = document.getElementsByTagName('header')[0];
+
 const vizCanv = document.getElementById('syn-viz');
+const addBtn = document.getElementById('syn-plugin-add');
+const addCont = document.getElementById('syn-add-menu');
+const pluginCont = document.getElementById('syn-plugins');
 const vctx = vizCanv.getContext('2d');
 const pianoWave = ctx.createPeriodicWave(new Float32Array([0,0,0,0,0,0,0]),new Float32Array([0,1,1,1,1,1,1]));
 const organWave = ctx.createPeriodicWave(new Float32Array([0,0,0,0,0,0,0]),new Float32Array([0,1,1,0,1,0,1]));
 const bellWave = ctx.createPeriodicWave(new Float32Array([0,0,0,0,0,0,0,0]),new Float32Array([0,1,0,1,0,1,0,1]));
+
+const echoTemplate = document.getElementById('syn-temp-echo');
+const widenerTemplate = document.getElementById('syn-temp-widener');
+const compressorTemplate = document.getElementById('syn-temp-compressor');
+const shaperTemplate = document.getElementById('syn-temp-waveshaper');
+const saturateTemplate = document.getElementById('syn-temp-saturate');
+const stereoTemplate = document.getElementById('syn-temp-stereo');
+const equalizerTemplate = document.getElementById('syn-temp-equalizer');
+
+function addEffect(t){
+	switch(t){
+		case 'echo':{
+			const frag = echoTemplate.content.cloneNode(true);
+			const mainEffect = frag.firstElementChild;
+			const enableChk = mainEffect.getElementsByClassName('syn-effect-enable')[0];
+			const feedbackCtrl = mainEffect.getElementsByClassName('syn-echo-feedback')[0];
+			const delayCtrl = mainEffect.getElementsByClassName('syn-echo-delay')[0];
+			const dryCtrl = mainEffect.getElementsByClassName('syn-effect-dry')[0];
+			const wetCtrl = mainEffect.getElementsByClassName('syn-effect-wet')[0];
+			const blendCtrl = mainEffect.getElementsByClassName('syn-echo-blend')[0];
+			const echoEffect = effectSystem.addEcho({delay:parseFloat(delayCtrl.value),feedbackGain:parseFloat(feedbackCtrl.value),blend:parseFloat(blendCtrl.value),dry:parseFloat(dryCtrl.value),wet:parseFloat(wetCtrl.value)});
+			enableChk.addEventListener('click',()=>echoEffect.enabled = enableChk.checked);
+			mainEffect.getElementsByClassName('syn-echo-feedback')[0].addEventListener('input',()=>echoEffect.feedback=parseFloat(feedbackInp.value));
+			delayCtrl.addEventListener('input',()=>echoEffect.delayTime = parseFloat(delayCtrl.value));
+			dryCtrl.addEventListener('input',()=>echoEffect.dryGain=parseFloat(dryCtrl.value));
+			wetCtrl.addEventListener('input',()=>echoEffect.wetGain=parseFloat(wetCtrl.value));
+			blendCtrl.addEventListener('input',()=>echoEffect.blend=parseFloat(blendCtrl.value));
+			mainEffect.getElementsByClassName('syn-close')[0].addEventListener('click',()=>{
+				mainEffect.remove();
+				effectSystem.removeEffect(echoEffect);
+			});
+			pluginCont.appendChild(frag);
+			break;
+		}
+		case 'widener':{
+			const frag = widenerTemplate.content.cloneNode(true);
+			const mainEffect = frag.firstElementChild;
+			const enableChk = mainEffect.getElementsByClassName('syn-effect-enable')[0];
+			const widthCtrl = mainEffect.getElementsByClassName('syn-widener-width')[0];
+			const dryCtrl = mainEffect.getElementsByClassName('syn-effect-dry')[0];
+			const wetCtrl = mainEffect.getElementsByClassName('syn-effect-wet')[0];
+			const widenerEffect = effectSystem.addWidener({width:parseFloat(widthCtrl.value),dry:parseFloat(dryCtrl.value),wet:parseFloat(wetCtrl.value)});
+			enableChk.addEventListener('click', ()=>widenerEffect.enabled=enableChk.checked);
+			widthCtrl.addEventListener('input', ()=>widenerEffect.setWidth(parseFloat(widthCtrl.value)));
+			dryCtrl.addEventListener('input', ()=>widenerEffect.dryGain=parseFloat(dryCtrl.value));
+			wetCtrl.addEventListener('input', ()=>widenerEffect.wetGain=parseFloat(wetCtrl.value));
+			mainEffect.getElementsByClassName('syn-close')[0].addEventListener('click',()=>{
+				mainEffect.remove();
+				effectSystem.removeEffect(widenerEffect);
+			});
+			pluginCont.appendChild(frag);
+			break;
+		}
+		case 'compressor':{
+			const frag = compressorTemplate.content.cloneNode(true);
+			const mainEffect = frag.firstElementChild;
+			const enableChk = mainEffect.getElementsByClassName('syn-effect-enable')[0];
+			const thresholdCtrl = mainEffect.getElementsByClassName('syn-comp-threshold')[0];
+			const kneeCtrl = mainEffect.getElementsByClassName('syn-comp-knee')[0];
+			const ratioCtrl = mainEffect.getElementsByClassName('syn-comp-ratio')[0];
+			const attackCtrl = mainEffect.getElementsByClassName('syn-comp-attack')[0];
+			const releaseCtrl = mainEffect.getElementsByClassName('syn-comp-release')[0];
+			const makeupCtrl = mainEffect.getElementsByClassName('syn-comp-makeup')[0];
+			const dryCtrl = mainEffect.getElementsByClassName('syn-effect-dry')[0];
+			const wetCtrl = mainEffect.getElementsByClassName('syn-effect-wet')[0];
+			const compCanvas = mainEffect.getElementsByClassName('syn-comp-canvas')[0];
+			compCanvas.height = compCanvas.width = window.innerHeight*0.15;
+			const compCtx = compCanvas.getContext('2d');
+			const compressorEffect = effectSystem.addCompressor({
+				threshold:parseFloat(thresholdCtrl.value),
+				knee:parseFloat(kneeCtrl.value),
+				ratio:parseFloat(ratioCtrl.value),
+				attack:parseFloat(attackCtrl.value),
+				release:parseFloat(releaseCtrl.value),
+				dry:parseFloat(dryCtrl.value),
+				wet:parseFloat(wetCtrl.value)
+			});
+
+			const renderComp = ()=>{
+				compCtx.clearRect(0,0,compCanvas.width,compCanvas.height);
+				compCtx.strokeStyle = '#ff697d';
+				compCtx.lineWidth = 2;
+				compCtx.shadowColor = '#ff697d';
+				compCtx.shadowBlur = 10;
+				const compressorSettings = compressorEffect.getSettings();
+				//0->-60
+				compCtx.beginPath();
+				compCtx.moveTo(0,compCanvas.height);
+				const thresholdMap = 1+(compressorSettings.threshold/60);
+				const kneeMap = compressorSettings.knee/60;
+				/*
+				const endLinear = ((compressorSettings.threshold-compressorSettings.knee*0.5)/60)*compCanvas.width;
+				const startRatio = ((compressorSettings.threshold+compressorSettings.knee*0.5)/60)*compCanvas.width
+				compCtx.lineTo(compCanvas.width+endLinear,-endLinear);
+				*/
+				const endLinear = (thresholdMap - kneeMap*0.5)*compCanvas.width;
+				const startRatio = (thresholdMap + kneeMap*0.5)*compCanvas.width;
+				compCtx.lineTo(endLinear,compCanvas.height-endLinear*compressorSettings.makeup);
+				for(let x=Math.floor(endLinear);x<Math.floor(startRatio);x++){
+					const xMap = x/compCanvas.width;
+					const transformedX = xMap + kneeMap*0.5 - thresholdMap;
+					compCtx.lineTo(x,compCanvas.height-(xMap+((1/compressorSettings.ratio - 1)*transformedX*transformedX)/(2*kneeMap))*compCanvas.width*compressorSettings.makeup);
+				}
+				//compCtx.lineTo(compCanvas.width,-(compCanvas.width*((compressorSettings.threshold+(-compressorSettings.threshold)/compressorSettings.ratio)/60)));
+				compCtx.lineTo(compCanvas.width,compCanvas.height-(thresholdMap + (1-thresholdMap)/compressorSettings.ratio)*compCanvas.width*compressorSettings.makeup);
+				compCtx.stroke();
+			}
+			renderComp();
+
+			enableChk.addEventListener('click', ()=> compressorEffect.enabled = enableChk.checked);
+			thresholdCtrl.addEventListener('input', () => {
+				compressorEffect.threshold = parseFloat(thresholdCtrl.value);
+				renderComp();
+			});
+			kneeCtrl.addEventListener('input', () => {
+				compressorEffect.knee = parseFloat(kneeCtrl.value);
+				renderComp();
+			});
+			ratioCtrl.addEventListener('input', () => {
+				compressorEffect.ratio = parseFloat(ratioCtrl.value);
+				renderComp();
+			});
+			makeupCtrl.addEventListener('input', () => {
+				compressorEffect.makeup = parseFloat(makeupCtrl.value);
+				renderComp();
+			});
+			attackCtrl.addEventListener('input', ()=> compressorEffect.attack = parseFloat(attackCtrl.value));
+			releaseCtrl.addEventListener('input', ()=> compressorEffect.release = parseFloat(releaseCtrl.value));
+			dryCtrl.addEventListener('input', ()=> compressorEffect.dryGain = parseFloat(dryCtrl.value));
+			wetCtrl.addEventListener('input', ()=> compressorEffect.wetGain = parseFloat(wetCtrl.value));
+			mainEffect.getElementsByClassName('syn-close')[0].addEventListener('click', ()=>{
+				mainEffect.remove();
+				effectSystem.removeEffect(compressorEffect);
+			});
+			pluginCont.appendChild(frag);
+			break;
+		}
+		case 'wave-shaper':{
+			const frag = shaperTemplate.content.cloneNode(true);
+			const mainEffect = frag.firstElementChild;
+			const enableChk = mainEffect.getElementsByClassName('syn-effect-enable')[0];
+			const dryCtrl = mainEffect.getElementsByClassName('syn-effect-dry')[0];
+			const wetCtrl = mainEffect.getElementsByClassName('syn-effect-wet')[0];
+			const canvas = mainEffect.getElementsByClassName('syn-waveshape-canvas')[0];
+			const ovCtrl = mainEffect.getElementsByClassName('syn-waveshape-oversampling')[0];
+			const sampleCtrl = mainEffect.getElementsByClassName('syn-waveshape-samples')[0];
+			const waveShaper = effectSystem.addWaveShaper({oversample:ovCtrl.value,dry:parseFloat(dryCtrl.value),wet:parseFloat(wetCtrl.value)});
+			canvas.height = canvas.width = window.innerHeight*0.15;
+			const shaperCanvas = new frostInteract(canvas,[[canvas.width*0.25,canvas.height*0.25]],
+				function(){
+					this.ctx.strokeStyle = '#ff697d';
+					this.ctx.fillStyle = '#49506f'
+					this.ctx.lineWidth = 2;
+					this.ctx.shadowColor = '#ff697d';
+					this.ctx.shadowBlur = 10;
+					this.ctx.beginPath();
+					this.ctx.moveTo(0,this.canv.height);
+					this.ctx.lineTo(this.interactables[0][0],this.interactables[0][1]);
+					this.ctx.lineTo(this.canv.width,0);
+					this.ctx.stroke();
+					this.ctx.beginPath();
+					this.ctx.moveTo(0,this.canv.height);
+					this.ctx.quadraticCurveTo(this.interactables[0][0], this.interactables[0][1], this.canv.width,0);
+					this.ctx.stroke();
+				},
+				{
+					afterMove: function(){
+						const ctrlY = (this.canv.height-this.interactables[0][1])/this.canv.height;
+						const bx = 2*(this.interactables[0][0]/this.canv.width);
+						const cx = 1-bx;
+						const samples = parseFloat(sampleCtrl.value);
+						const curve = new Float32Array(samples);
+						const samplesDiv = samples/2;
+						for(let i=0;i<samplesDiv;++i){
+							const tval = (-bx + Math.sqrt(bx*bx - 4*cx*(-(i/samplesDiv))))/(2*cx);
+							const yval = (1-tval)*2*tval*ctrlY + tval*tval;
+							curve[samplesDiv+i]=yval;
+							curve[samplesDiv-i-1]=-yval;
+						}
+						waveShaper.setCurve(curve);
+					}
+				}
+			);
+			shaperCanvas.renderInteract();
+			shaperCanvas.afterMove();
+			enableChk.addEventListener('click', ()=> waveShaper.enabled = enableChk.checked);
+			dryCtrl.addEventListener('input', ()=> waveShaper.dryGain = parseFloat(dryCtrl.value));
+			wetCtrl.addEventListener('input', ()=> waveShaper.wetGain = parseFloat(wetCtrl.value));
+			ovCtrl.addEventListener('input',()=>waveShaper.setOversample(ovCtrl.value));
+			mainEffect.getElementsByClassName('syn-close')[0].addEventListener('click', ()=>{
+				mainEffect.remove();
+				effectSystem.removeEffect(waveShaper);
+			});
+			pluginCont.appendChild(frag);
+			break;
+		}
+		case 'saturate':{
+			const frag = document.importNode(saturateTemplate.content, true);
+			const mainEffect = frag.firstElementChild;
+			const enableChk = mainEffect.getElementsByClassName('syn-effect-enable')[0];
+			const dryCtrl = mainEffect.getElementsByClassName('syn-effect-dry')[0];
+			const wetCtrl = mainEffect.getElementsByClassName('syn-effect-wet')[0];
+			const amtCtrl = mainEffect.getElementsByClassName('syn-saturate-amount')[0];
+			const typCtrl = mainEffect.getElementsByClassName('syn-saturate-type')[0];
+			const ovCtrl = mainEffect.getElementsByClassName('syn-saturate-oversampling')[0];
+			const sampleCtrl = mainEffect.getElementsByClassName('syn-saturate-samples')[0];
+			const saturateCanvas = mainEffect.getElementsByClassName('syn-saturate-canvas')[0];
+			const saturateCtx = saturateCanvas.getContext('2d');
+			saturateCanvas.height = saturateCanvas.width = window.innerHeight*0.15;
+			const saturate = effectSystem.addSaturate({
+				type:typCtrl.value,
+				amount:parseFloat(amtCtrl.value),
+				oversample:ovCtrl.value,
+				samples:parseInt(sampleCtrl.value),
+				dry:parseFloat(dryCtrl.value),
+				wet:parseFloat(wetCtrl.value)
+			});
+			const updateSaturateCanvas=()=>{
+				const samples = saturate.samples;
+				const samplesDiv = samples/2;
+				saturateCtx.clearRect(0, 0, saturateCanvas.width, saturateCanvas.height);
+				saturateCtx.strokeStyle = '#ff697d';
+				saturateCtx.lineWidth = 2;
+				saturateCtx.beginPath();
+				let firstPoint = true;
+				saturateCtx.moveTo(0, saturateCanvas.height);
+				for (let i=samplesDiv;i<samples;++i) {
+					const px = ((i - samplesDiv) / samplesDiv) * saturateCanvas.width;
+					const py = saturateCanvas.height-(saturate.curve[i] * saturateCanvas.height);
+					saturateCtx.lineTo(px, py);
+				}
+				saturateCtx.stroke();
+			}
+			updateSaturateCanvas();
+			enableChk.addEventListener('click', ()=>saturate.enabled = enableChk.checked);
+			dryCtrl.addEventListener('input', ()=>saturate.dryGain = parseFloat(dryCtrl.value));
+			wetCtrl.addEventListener('input', ()=>saturate.wetGain = parseFloat(wetCtrl.value));
+			typCtrl.addEventListener('change', ()=>{
+				saturate.setType(typCtrl.value);
+				updateSaturateCanvas();
+			});
+			amtCtrl.addEventListener('input', ()=>{
+				saturate.setAmount(parseFloat(amtCtrl.value));
+				updateSaturateCanvas();
+			});
+			ovCtrl.addEventListener('input', ()=>saturate.setOversample(ovCtrl.value));
+			sampleCtrl.addEventListener('input', ()=>{
+				saturate.setSamples(parseInt(sampleCtrl.value));
+				updateSaturateCanvas();
+			});
+			mainEffect.getElementsByClassName('syn-close')[0].addEventListener('click', ()=>{
+				mainEffect.remove();
+				effectSystem.removeEffect(saturate);
+			});
+			pluginCont.appendChild(frag);
+			break;
+		}
+		case 'stereo-shaper':{
+			const frag = stereoTemplate.content.cloneNode(true);
+			const mainEffect = frag.firstElementChild;
+			const enableChk = mainEffect.getElementsByClassName('syn-effect-enable')[0];
+			const llCtrl = mainEffect.getElementsByClassName('syn-stereo-ll')[0];
+			const rlCtrl = mainEffect.getElementsByClassName('syn-stereo-rl')[0];
+			const lrCtrl = mainEffect.getElementsByClassName('syn-stereo-lr')[0];
+			const rrCtrl = mainEffect.getElementsByClassName('syn-stereo-rr')[0];
+			const dryCtrl = mainEffect.getElementsByClassName('syn-effect-dry')[0];
+			const wetCtrl = mainEffect.getElementsByClassName('syn-effect-wet')[0];
+			const stereoShaper = effectSystem.addStereoShaper({
+				ll: parseFloat(llCtrl.value),
+				rl: parseFloat(rlCtrl.value),
+				lr: parseFloat(lrCtrl.value),
+				rr: parseFloat(rrCtrl.value),
+				dry: parseFloat(dryCtrl.value),
+				wet: parseFloat(wetCtrl.value)
+			});
+			enableChk.addEventListener('click', ()=>stereoShaper.enabled = enableChk.checked);
+			llCtrl.addEventListener('input', ()=>stereoShaper.ll = parseFloat(llCtrl.value));
+			rlCtrl.addEventListener('input', ()=>stereoShaper.rl = parseFloat(rlCtrl.value));
+			lrCtrl.addEventListener('input', ()=>stereoShaper.lr = parseFloat(lrCtrl.value));
+			rrCtrl.addEventListener('input', ()=>stereoShaper.rr = parseFloat(rrCtrl.value));
+			dryCtrl.addEventListener('input', ()=>stereoShaper.dryGain = parseFloat(dryCtrl.value));
+			wetCtrl.addEventListener('input', ()=>stereoShaper.wetGain = parseFloat(wetCtrl.value));
+			mainEffect.getElementsByClassName('syn-close')[0].addEventListener('click', ()=>{
+				mainEffect.remove();
+				effectSystem.removeEffect(stereoShaper);
+			});
+			pluginCont.appendChild(frag);
+			break;
+		}
+		case 'equalizer':{
+			const frag = equalizerTemplate.content.cloneNode(true);
+			const mainEffect = frag.firstElementChild;
+			const enableChk = mainEffect.getElementsByClassName('syn-effect-enable')[0];
+			const equalizerCanvas = mainEffect.getElementsByClassName('syn-equalizer-canvas')[0];
+			const dryCtrl = mainEffect.getElementsByClassName('syn-effect-dry')[0];
+			const wetCtrl = mainEffect.getElementsByClassName('syn-effect-wet')[0];
+			const equalizerCtx = equalizerCanvas.getContext('2d');
+			const equalizerMain = new screwGroup(equalizerCtx,0,0);
+			let middleHeight = equalizerCanvas.height*0.5;
+			//const equalizerLineInt = new screwLineInt(equalizerCtx,0,middleHeight,equalizerCanvas.width,middleHeight,{r:10});
+			const equalizerPoints = [];
+			let activePoint = null;
+			let prevActive = null;
+			const ctrlCont = mainEffect.getElementsByClassName('syn-ctrl')[0];
+
+			const equalizer = effectSystem.addEqualizer({
+				dry: parseFloat(dryCtrl.value),
+				wet: parseFloat(wetCtrl.value)
+			});
+			
+			const renderEqualizer = ()=>{
+				equalizerCtx.reset();
+				equalizerCtx.strokeStyle = '#ff697d';
+				equalizerCtx.fillStyle = '#49506f'
+				equalizerCtx.lineWidth = 1;
+				equalizerCtx.shadowColor = '#ff697d';
+				equalizerCtx.shadowBlur = 10;
+
+				equalizerCtx.beginPath();
+				equalizerCtx.moveTo(0,equalizerCanvas.height-(vizFreqArray[0]*equalizerCanvas.height)/255);
+				for(let i=1;i<vizFreqCount;i+=3){
+					equalizerCtx.lineTo(equalizerCanvas.width*((Math.log(i*nyquist / vizFreqCount) - vizLogMin)/vizLogDen), equalizerCanvas.height-(vizFreqArray[i]*equalizerCanvas.height)/255);
+				}
+				equalizerCtx.stroke();
+
+				equalizerCtx.lineWidth = 2;
+				//Draw middle line
+				equalizerCtx.beginPath();
+				equalizerCtx.moveTo(0,middleHeight);
+				equalizerCtx.lineTo(equalizerCanvas.width,middleHeight);
+				equalizerCtx.stroke();
+				equalizerMain.render();
+				mainEffect.open && window.requestAnimationFrame(renderEqualizer);
+			};
+
+			const updateCanvasDimensions = ()=>{
+				equalizerCanvas.width = ctrlCont.getBoundingClientRect().width;
+				equalizerCanvas.height = window.innerHeight*0.22;
+				middleHeight = equalizerCanvas.height*0.5;
+				//equalizerLineInt.ex = equalizerCanvas.width;
+				//equalizerLineInt.by = equalizerLineInt.ey = middleHeight;
+				//renderEqualizer();
+			}
+
+			const updatePointMetrics = (i)=>{
+				const gainVal = (-30*(equalizerPoints[i].y-middleHeight))/middleHeight;
+				const freqVal = Math.E**(vizLogDen*(equalizerPoints[i].x/equalizerCanvas.width) + vizLogMin);
+				equalizerPoints[i].children[2].children[1].t = freqVal.toFixed(1);
+				equalizerPoints[i].children[2].children[2].t = gainVal.toFixed(1);
+				equalizer.setBandGain(i,gainVal);
+				equalizer.setBandFrequency(i,freqVal);
+			}
+
+			equalizerCanvas.addEventListener('mousedown',e=>{
+				if(prevActive != null){
+					if(equalizerPoints[prevActive].children[2].children[0].intersect(e.offsetX,e.offsetY)){
+						const equalizerType = prompt('Enter a new type\n(Highpass/Lowpass/Highshelf/Lowshelf/Bandpass/Peaking/Notch/Allpass)').toLowerCase();
+						equalizer.setBandType(prevActive,equalizerType);
+						equalizerPoints[prevActive].children[2].children[0].t = generateScrewDropdown(equalizer.getBandType(prevActive));
+						//renderEqualizer();
+						return;
+					}else if(equalizerPoints[prevActive].children[2].children[1].intersect(e.offsetX,e.offsetY)){
+						const freqInput = parseFloat(prompt('Enter a new Frequency'));
+						if(!Number.isNaN(freqInput)){
+							equalizer.setBandFrequency(prevActive,freqInput);
+							equalizerPoints[prevActive].children[2].children[1].t = freqInput.toFixed(1);
+							equalizerPoints[prevActive].x = ((Math.log(freqInput) - vizLogMin)/vizLogDen)*equalizerCanvas.width;
+						}
+						//renderEqualizer();
+						return;
+					}else if(equalizerPoints[prevActive].children[2].children[2].intersect(e.offsetX,e.offsetY)){
+						const gainInput = parseFloat(prompt('Enter a new Gain'));
+						if(!Number.isNaN(gainInput)){
+							equalizer.setBandGain(prevActive,gainInput);
+							equalizerPoints[prevActive].children[2].children[2].t = gainInput.toFixed(1);
+							equalizerPoints[prevActive].y = (-middleHeight*gainInput/30)+middleHeight;
+						};
+						//renderEqualizer();
+						return;
+					}else if(equalizerPoints[prevActive].children[2].children[3].intersect(e.offsetX,e.offsetY)){
+						const qInput = parseFloat(prompt('Enter a new Q factor'));
+						if(!Number.isNaN(qInput)){
+							equalizer.setBandQ(prevActive,qInput);
+							equalizerPoints[prevActive].children[2].children[3].t = qInput.toFixed(3);
+						};
+						//renderEqualizer();
+						return;
+					}else if(equalizerPoints[prevActive].children[2].children[4].intersect(e.offsetX,e.offsetY) && confirm('Are you sure you want to delete this band?')){
+						equalizer.removeBand(prevActive);
+						equalizerMain.removeChildFromElement(equalizerPoints[prevActive]);
+						equalizerPoints.splice(prevActive,1);
+						for(let i=prevActive;i<equalizerPoints.length;i++) equalizerPoints[i].children[1].t = i;
+						prevActive = null;
+						//renderEqualizer();
+						return;
+					}else{
+						equalizerPoints[prevActive].children[2].visible = false;
+					}
+				}
+				for(let i=0;i<equalizerPoints.length;i++){
+					if(equalizerPoints[i].children[0].intersect(e.offsetX,e.offsetY)){
+						activePoint = i;
+						equalizerPoints[activePoint].children[2].visible = true;
+						//renderEqualizer();
+						break;
+					}
+				}
+				if(activePoint === null && Math.abs(e.offsetY-middleHeight) <= 5){ //equalizerLineInt.intersect(e.offsetX,e.offsetY)
+					activePoint = equalizerPoints.length;
+					const section = equalizerCanvas.width/5;
+					let bound = section;
+					let type = 'highpass';
+					for(let i=0;i<5;i++){
+						if(e.offsetX < bound){
+							switch(i){
+								case 1:
+									type = 'lowshelf';
+									break;
+								case 2:
+									type = 'peaking';
+									break;
+								case 3:
+									type = 'highshelf';
+									break;
+								case 4:
+									type = 'lowpass';
+							}
+							break;
+						}
+						bound+=section;
+					}
+					equalizer.addBand({type:type,gain:0,frequency:0,Q:1});
+					const point = createEqualizerPoint(equalizerCtx,e.offsetX,e.offsetY,equalizerPoints.length,type);
+					equalizerMain.addChild(point);
+					equalizerPoints.push(point);
+					updatePointMetrics(equalizerPoints.length-1);
+					//renderEqualizer();
+				}
+				//console.log('[SYN] Equ click dist:'+(Math.abs(e.offsetY-middleHeight)).toString());
+			});
+			equalizerCanvas.addEventListener('mousemove',e=>{
+				if(activePoint != null){
+					equalizerPoints[activePoint].x += e.movementX;
+					equalizerPoints[activePoint].y += e.movementY;
+					updatePointMetrics(activePoint);
+					//renderEqualizer();
+				}
+			});
+			equalizerCanvas.addEventListener('mouseup',()=>{
+				if(activePoint != null){
+					prevActive = activePoint;
+					activePoint=null;
+				}
+			});
+			equalizerCanvas.addEventListener('mouseenter',e=>{
+				if(activePoint != null){
+					equalizerPoints[activePoint].x = e.offsetX;
+					equalizerPoints[activePoint].y = e.offsetY;
+				}
+			});
+			window.addEventListener('resize',updateCanvasDimensions);
+
+			mainEffect.addEventListener('toggle',()=>{
+				mainEffect.open && renderEqualizer();
+			});
+
+			enableChk.addEventListener('click', ()=>equalizer.enabled = enableChk.checked);
+			dryCtrl.addEventListener('input', ()=>equalizer.dryGain = parseFloat(dryCtrl.value));
+			wetCtrl.addEventListener('input', ()=>equalizer.wetGain = parseFloat(wetCtrl.value));
+			mainEffect.getElementsByClassName('syn-close')[0].addEventListener('click', ()=>{
+				mainEffect.remove();
+				effectSystem.removeEffect(equalizer);
+			});
+			pluginCont.appendChild(frag);
+			updateCanvasDimensions();
+		}
+	}
+}
+
 masterGain.gain.value = mgainInp.value;
 mgainInp.addEventListener('input', ()=>masterGain.gain.value=mgainInp.value);
 mpanInp.addEventListener('input', ()=>masterPan.pan.value=mpanInp.value);
 vizCanv.width = headerCont.getBoundingClientRect().width;
-
+addBtn.addEventListener('click',e=>{
+	e.stopPropagation(),addCont.classList.toggle('syn-hidden')
+});
+document.addEventListener('click',()=>{
+	!addCont.classList.contains('syn-hidden') && addCont.classList.add('syn-hidden')
+});
+addCont.addEventListener('click',e=>addEffect(e.target.title));
 const plkChk = document.getElementById('syn-plk');
 const plkDec = document.getElementById('syn-plk-dec');
 
@@ -256,38 +2114,210 @@ const activeNotes = new Map();
 const keyElms = new Map();
 
 const vizFreqCount = masterAnal.frequencyBinCount;
+const vizHalfFreq = vizFreqCount*0.5;
+const vizQuartFreq = vizFreqCount*0.25;
+const vizNquartFreq = vizFreqCount*0.75
 const vizFreqArray = new Uint8Array(vizFreqCount);
+const vizFFTCount = masterAnal.fftSize;
+const vizHalfFFT = vizFFTCount*0.5;
+const vizQuartFFT = vizFFTCount*0.25;
+const vizNquartFFT = vizFFTCount*0.75;
+const vizFFTArray = new Uint8Array(vizFFTCount);
+const vizLogMin = Math.log(20);
+const vizLogMax = Math.log(nyquist);
+const vizLogDen = vizLogMax - vizLogMin;
+let vizMiddleWidth = vizCanv.width*0.5;
+const vizMiddleHeight = vizCanv.height*0.5;
+const tau = Math.PI*2;
 const coolGrad = vctx.createLinearGradient(0,0,0,vizCanv.height);
 coolGrad.addColorStop(0, '#FEBEC7');
 coolGrad.addColorStop(1, '#ff697d');
-let vizLogDiv = vizCanv.width/6;
 let vizRegDiv = vizCanv.width/vizFreqCount;
+let vizTimeDiv = vizCanv.width/vizFFTCount;
+const vizCircDiv = tau/vizFreqCount;
+const vizCircFFTDiv = tau/vizFFTCount;
+vctx.lineWidth = 2;
 vctx.shadowBlur = 40;
 vctx.shadowColor = '#ff143baa';
-vctx.fillStyle = coolGrad;
+vctx.strokeStyle = vctx.fillStyle = coolGrad;
+const vizCircRad = 30;
+const vizSquareSide = 50;
+const vizSquareSeg = 25;
+const vizSquarePerimeter = 200;
+const vizSquareDiv = vizSquarePerimeter/vizFreqCount;
+const vizSquareFFTDiv = vizSquarePerimeter/vizFFTCount;
 function renderViz(){
 	vctx.clearRect(0,0,vizCanv.width,vizCanv.height);
-	masterAnal.getByteFrequencyData(vizFreqArray);
-	vctx.beginPath();
-	vctx.moveTo(0,vizCanv.height);
-	let p = 0;
-	vctx.lineTo(0,vizCanv.height-vizFreqArray[0]);
-	for(let i=1;i<vizFreqCount;i++){
-		vctx.lineTo(p+=vizLogDiv/i,vizCanv.height-((vizFreqArray[i]*vizCanv.height*0.8)/255));
-		if(p>vizCanv.width) break;
+	if(vizTimeChk.checked){
+		masterAnal.getByteTimeDomainData(vizFFTArray);
+		vctx.beginPath();
+		switch(vizSelectShape.value){
+			case 'Line':
+				vctx.moveTo(0,(vizFFTArray[0]*vizCanv.height)/255);
+				let scaledX = vizTimeDiv;
+				for(let i=0;i<vizFFTCount;++i){
+					vctx.lineTo(scaledX,(vizFFTArray[i]*vizCanv.height)/255)
+					scaledX+=vizTimeDiv;
+				}
+				break;
+			case 'Circle':
+				vctx.moveTo(vizMiddleWidth + (vizCircRad + (vizFFTArray[0]*vizMiddleHeight*0.5)/255),vizMiddleHeight);
+				let theta = vizCircFFTDiv;
+				for(let i=1;i<vizFFTCount;i++){
+					const r = vizCircRad + (vizFFTArray[i]*vizMiddleHeight*0.5)/255;
+					vctx.lineTo(vizMiddleWidth+r*Math.cos(theta),vizMiddleHeight-r*Math.sin(theta));
+					theta += vizCircDiv;
+				}
+				break;
+			case 'Square':
+				const leftX = vizMiddleWidth-vizSquareSeg;
+				const topY = vizMiddleHeight-vizSquareSeg;
+				const rightX = vizMiddleWidth+vizSquareSeg;
+				const bottomY = vizMiddleHeight+vizSquareSeg;
+				vctx.moveTo(leftX,topY);
+				let needMove = true;
+				let squareX = 0;
+				for(let i=0;i<vizFFTCount;i++){
+					const scaledY = ((vizFFTArray[i]-128)*vizMiddleHeight)/256;
+					if(i < vizQuartFFT){
+						vctx.lineTo(leftX+squareX,topY-scaledY);
+					}else if(i < vizHalfFFT){
+						if(needMove){
+							vctx.lineTo(rightX,topY);
+							squareX = 0;
+							needMove = false;
+						}
+						vctx.lineTo(rightX+scaledY,topY+squareX);
+					}else if(i < vizNquartFFT){
+						if(!needMove){
+							vctx.lineTo(rightX,bottomY);
+							squareX = 0;
+							needMove = true;
+						}
+						vctx.lineTo(rightX-squareX,bottomY+scaledY);
+					}else{
+						if(needMove){
+							vctx.lineTo(leftX,bottomY);
+							squareX = 0;
+							needMove = false;
+						}
+						vctx.lineTo(leftX-scaledY,bottomY-squareX);
+					}
+					squareX+=vizSquareFFTDiv;
+				}
+				vctx.lineTo(leftX,topY);
+		}
+		vctx.stroke();
+	}else{
+		masterAnal.getByteFrequencyData(vizFreqArray);
+		vctx.beginPath();
+		switch(vizSelectShape.value){
+			case 'Line':
+				vctx.moveTo(0,vizCanv.height);
+				vctx.lineTo(0,vizCanv.height-(vizFreqArray[0]*vizCanv.height)/255);
+				for(let i=1;i<vizFreqCount;i++){
+					vctx.lineTo(logChk.checked ? vizCanv.width*((Math.log(i*nyquist / vizFreqCount) - vizLogMin)/vizLogDen) : i*vizRegDiv, vizCanv.height-(vizFreqArray[i]*vizCanv.height)/255);
+				}
+				vctx.lineTo(vizCanv.width,vizCanv.height);
+				break;
+			case 'Circle':
+				vctx.moveTo(vizMiddleWidth+vizCircRad+(vizFreqArray[0]*vizMiddleHeight*0.5)/255,vizMiddleHeight);
+				for(let i=1;i<vizFreqCount;i++){
+					const r = vizCircRad+(vizFreqArray[i]*vizMiddleHeight*0.5)/255;
+					const theta = logChk.checked ? tau*((Math.log(i*nyquist / vizFreqCount) - vizLogMin)/vizLogDen) : i*vizCircDiv;
+					//if(theta>tau){throw new Error("overtau");};
+					vctx.lineTo(vizMiddleWidth+r*Math.cos(theta), vizMiddleHeight-r*Math.sin(theta));
+					//console.log(r*Math.cos(theta))
+					//console.log(r*Math.sin(theta))
+				}
+				break;
+			case 'Square':
+				const leftX = vizMiddleWidth-vizSquareSeg;
+				const topY = vizMiddleHeight-vizSquareSeg;
+				const rightX = vizMiddleWidth+vizSquareSeg;
+				const bottomY = vizMiddleHeight+vizSquareSeg;
+				vctx.moveTo(leftX,topY);
+				if(logChk.checked){
+					let needMove = true;
+					for(let i=0;i<vizFreqCount;i++){
+						const scaledX = (Math.log(i*nyquist / vizFreqCount) - vizLogMin)/vizLogDen;
+						const scaledY = (vizFreqArray[i]*vizMiddleHeight)/512;
+						
+						if(scaledX < 0.25){
+							vctx.lineTo(leftX+scaledX*vizSquarePerimeter,topY-scaledY);
+						}else if(scaledX < 0.5){
+							if(needMove){
+								vctx.lineTo(rightX,topY);
+								needMove = false;
+							}
+							vctx.lineTo(rightX+scaledY,topY+(scaledX-0.25)*vizSquarePerimeter);
+						}else if(scaledX < 0.75){
+							if(!needMove){
+								vctx.lineTo(rightX,bottomY);
+								needMove = true;
+							}
+							vctx.lineTo(rightX-(scaledX-0.5)*vizSquarePerimeter,bottomY+scaledY);
+						}else{
+							if(needMove){
+								vctx.lineTo(leftX,bottomY);
+								needMove = false;
+							}
+							vctx.lineTo(leftX-scaledY,bottomY-(scaledX-0.75)*vizSquarePerimeter);
+						}
+					}
+				}else{
+					let needMove = true;
+					let scaledX = 0;
+					for(let i=0;i<vizFreqCount;i++){
+						const scaledY = (vizFreqArray[i]*vizMiddleHeight)/512;
+						
+						if(i < vizQuartFreq){
+							vctx.lineTo(leftX+scaledX,topY-scaledY);
+						}else if(i < vizHalfFreq){
+							if(needMove){
+								vctx.lineTo(rightX,topY);
+								scaledX = 0;
+								needMove = false;
+							}
+							vctx.lineTo(rightX+scaledY,topY+scaledX);
+						}else if(i < vizNquartFreq){
+							if(!needMove){
+								vctx.lineTo(rightX,bottomY);
+								scaledX = 0;
+								needMove = true;
+							}
+							vctx.lineTo(rightX-scaledX,bottomY+scaledY);
+						}else{
+							if(needMove){
+								vctx.lineTo(leftX,bottomY);
+								scaledX = 0;
+								needMove = false;
+							}
+							vctx.lineTo(leftX-scaledY,bottomY-scaledX);
+						}
+						scaledX+=vizSquareDiv;
+					}
+				}
+				vctx.lineTo(leftX,topY);
+				break;
+		}
+		vctx.fill();
 	}
-	vctx.lineTo(vizCanv.width,vizCanv.height);
-	vctx.closePath();
-	vctx.fill();
 	requestAnimationFrame(renderViz);
 }
+// alert("viz");
+// try{
 renderViz();
+// }catch(e){
+// alert(e);
+// }
+//alert("vizext");
 function noteOn(midi){
 	midi+=parseInt(trsInp.value);
-  if(activeNotes.has(midi))return;
-  const oscArr = [];
+	if(activeNotes.has(midi))return;
+	const oscArr = [];
 	//Make an oscillator list
-  const gain = ctx.createGain();
+	const gain = ctx.createGain();
 	const oscOut = ctx.createGain();
 	const noteFreq = parseInt(tuneInp.value)*Math.pow(2,midi/12);
 	switch(parseInt(insSel.value)){
@@ -397,30 +2427,30 @@ function noteOn(midi){
 	}else{
 		oscOut.connect(gain);
 	}
-  const attack = parseFloat(atkInp.value);
-  gain.gain.cancelScheduledValues(ctx.currentTime);
-  gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(1.0,ctx.currentTime+attack);
-  gain.gain.exponentialRampToValueAtTime(parseFloat(susInp.value),ctx.currentTime+attack+parseFloat(decInp.value));
-  gain.connect(master);
+	const attack = parseFloat(atkInp.value);
+	gain.gain.cancelScheduledValues(ctx.currentTime);
+	gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+	gain.gain.exponentialRampToValueAtTime(1.0,ctx.currentTime+attack);
+	gain.gain.exponentialRampToValueAtTime(parseFloat(susInp.value),ctx.currentTime+attack+parseFloat(decInp.value));
+	gain.connect(master);
 	keyElms.get(midi)?.classList.add('syn-active');
-  activeNotes.set(midi,{oscArr, gain});
+	activeNotes.set(midi,{oscArr, gain});
 }
 function noteOff(midi){
 	midi+=parseInt(trsInp.value);
-  const node = activeNotes.get(midi);
-  if(!node)return;
-  const now = ctx.currentTime;
-  const release = parseFloat(relInp.value);
-  node.gain.gain.cancelScheduledValues(now);
-  node.gain.gain.setValueAtTime(node.gain.gain.value, now);
-  node.gain.gain.exponentialRampToValueAtTime(0.0001, now + release);
+	const node = activeNotes.get(midi);
+	if(!node)return;
+	const now = ctx.currentTime;
+	const release = parseFloat(relInp.value);
+	node.gain.gain.cancelScheduledValues(now);
+	node.gain.gain.setValueAtTime(node.gain.gain.value, now);
+	node.gain.gain.exponentialRampToValueAtTime(0.0001, now + release);
 	for(let i=0;i<node.oscArr.length;i++){
 		node.oscArr[i].stop(now + release + 0.05);
+		setTimeout(()=> node.oscArr[i].disconnect(), (release+0.1)*1000);
 	}
-  setTimeout(()=> node.osc.disconnect(), (release+0.1)*1000);
 	keyElms.get(midi)?.classList.remove('syn-active');
-  activeNotes.delete(midi);
+	activeNotes.delete(midi);
 }
 
 for (let i=0;i<count;i++){
@@ -464,9 +2494,16 @@ window.addEventListener('resize',()=>{
 	vizCanv.width=headerCont.getBoundingClientRect().width;
 	vctx.shadowBlur = 40;
 	vctx.shadowColor = '#ff143baa';
-	vctx.fillStyle = '#ff697d';
+	const coolGrad = vctx.createLinearGradient(0,0,0,vizCanv.height);
+	coolGrad.addColorStop(0, '#FEBEC7');
+	coolGrad.addColorStop(1, '#ff697d');
+	vctx.strokeStyle = vctx.fillStyle = coolGrad;
 	vizLogDiv = vizCanv.width/6;
+	vizMiddleWidth = vizCanv.width*0.5;
 });
+
+addEffect('echo');
+addEffect('saturate');
 </script>
 </body>
 </html>
